@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenner Góngora | Tecnólogo en Desarrollo de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .heading { font-family: 'Space Grotesk', sans-serif; }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-link.active {
+            color: #1e40af;
+            border-bottom: 3px solid #1e40af;
+        }
+
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+
+        .tech-card {
+            transition: all 0.3s ease;
+        }
+        .tech-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        /* Slider */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slider-slide {
+            min-width: 100%;
+            padding: 0 0.5rem;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .slider-btn:hover {
+            background: white;
+        }
+        .slider-btn.prev { left: 0.5rem; }
+        .slider-btn.next { right: 0.5rem; }
+
+        /* Curso content */
+        .curso-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .curso-content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .curso-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .curso-content p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .curso-content ul, .curso-content ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+        .curso-content li {
+            margin-bottom: 0.5rem;
+        }
+        .curso-content pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.2rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+        }
+        .curso-content code {
+            background: #f1f5f9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.3rem;
+            font-size: 0.9rem;
+            color: #0f172a;
+        }
+        .curso-content pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .curso-content .note {
+            background: #fef9e7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        .curso-content .note i {
+            color: #f59e0b;
+            margin-right: 0.5rem;
+        }
+        .curso-content .example-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .curso-content .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Video container responsive */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 1rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 640px) {
+            .curso-content h1 { font-size: 2rem; }
+            .curso-content h2 { font-size: 1.5rem; }
+            .slider-btn { width: 32px; height: 32px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800">
+
+    <!-- Navbar con iconos -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center flex-wrap gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-lightbulb text-yellow-400 text-3xl" style="filter: drop-shadow(0 0 6px rgba(250,204,21,0.5));"></i>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="heading text-2xl font-semibold">Jenner Góngora</span>
+                    </div>
+                    <p class="text-sm text-zinc-500">Tecnólogo en Desarrollo de Sistemas • UTS</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-6 text-sm font-medium flex-wrap">
+                <a href="#" onclick="navigateTo('home')" class="nav-link active text-zinc-600 hover:text-blue-700"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#" onclick="navigateTo('tecnologias')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-code"></i> Tecnologías</a>
+                <a href="#" onclick="navigateTo('psicologia')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-brain"></i> Psicología &amp; Tech</a>
+                <a href="#" onclick="navigateTo('seguridad')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-shield-alt"></i> Ciberseguridad</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- HOME (sin video) -->
+    <!-- ============================================================ -->
+    <section id="home" class="page-section active">
+        <!-- Hero -->
+        <div class="bg-gradient-to-br from-blue-800 to-blue-600 text-white py-28">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h1 class="heading text-6xl md:text-7xl font-bold leading-tight mb-6">
+                    Soluciones digitales<br>con enfoque humano
+                </h1>
+                <p class="text-xl text-blue-100 max-w-lg mx-auto">
+                    Tecnólogo en Desarrollo de Sistemas Informáticos egresado de la Universidad Tecnológica de Santander.
+                </p>
+                <div class="mt-10">
+                    <button onclick="navigateTo('tecnologias')" 
+                            class="px-10 py-4 bg-white text-blue-700 font-semibold rounded-3xl hover:bg-amber-300 transition-all text-lg">
+                        Ver mis habilidades
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider de secciones -->
+        <div class="max-w-6xl mx-auto px-6 py-16">
+            <h2 class="heading text-4xl font-bold text-center mb-4">Explora las tecnologías que domino</h2>
+            <p class="text-center text-zinc-500 mb-12">Desliza para conocer cada una</p>
+
+            <div class="slider-container">
+                <div class="slider-track" id="sliderTrack">
+                    <!-- Slide 1: HTML -->
+                    <div class="slider-slide">
+                        <div class="bg-white p-8 rounded-3xl shadow-md border text-center">
+                            <i class="fab fa-html5 text-7xl text-orange-500 mb-4"></i>
+                            <h3 class="text-2xl font-bold">HTML5</h3>
+                            <p class="text-zinc-500">Estructura y semántica web</p>
+                            <button onclick="verCurso('html')" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Acerca del tema →</button>
+                        </div>
+                    </div>
+                    <!-- Slide 2: CSS -->
+                    <div class="slider-slide">
+                        <div class="bg-white p-8 rounded-3xl shadow-md border text-center">
+                            <i class="fab fa-css3-alt text-7xl text-blue-600 mb-4"></i>
+                            <h3 class="text-2xl font-bold">CSS3</h3>
+                            <p class="text-zinc-500">Diseño responsive y moderno</p>
+                            <button onclick="verCurso('css')" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Acerca del tema →</button>
+                        </div>
+                    </div>
+                    <!-- Slide 3: JavaScript -->
+                    <div class="slider-slide">
+                        <div class="bg-white p-8 rounded-3xl shadow-md border text-center">
+                            <i class="fab fa-js text-7xl text-yellow-500 mb-4"></i>
+                            <h3 class="text-2xl font-bold">JavaScript</h3>
+                            <p class="text-zinc-500">Lógica y dinamismo</p>
+                            <button onclick="verCurso('js')" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Acerca del tema →</button>
+                        </div>
+                    </div>
+                    <!-- Slide 4: Laravel -->
+                    <div class="slider-slide">
+                        <div class="bg-white p-8 rounded-3xl shadow-md border text-center">
+                            <i class="fab fa-laravel text-7xl text-red-500 mb-4"></i>
+                            <h3 class="text-2xl font-bold">Laravel</h3>
+                            <p class="text-zinc-500">v10 · v11 · v12</p>
+                            <button onclick="verCurso('laravel')" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Acerca del tema →</button>
+                        </div>
+                    </div>
+                    <!-- Slide 5: SQL -->
+                    <div class="slider-slide">
+                        <div class="bg-white p-8 rounded-3xl shadow-md border text-center">
+                            <i class="fas fa-database text-7xl text-emerald-600 mb-4"></i>
+                            <h3 class="text-2xl font-bold">SQL</h3>
+                            <p class="text-zinc-500">Bases de datos relacionales</p>
+                            <button onclick="verCurso('sql')" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Acerca del tema →</button>
+                        </div>
+                    </div>
+                    <!-- Slide 6: APIs -->
+                    <div class="slider-slide">
+                        <div class="bg-white p-8 rounded-3xl shadow-md border text-center">
+                            <i class="fas fa-plug text-7xl text-purple-600 mb-4"></i>
+                            <h3 class="text-2xl font-bold">APIs</h3>
+                            <p class="text-zinc-500">Consumo y creación</p>
+                            <button onclick="verCurso('api')" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Acerca del tema →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="slider-btn prev" onclick="slidePrev()"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next" onclick="slideNext()"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Apoyo administrativo (confidencialidad) -->
+        <div class="bg-white py-12 border-t border-b border-zinc-200">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <i class="fas fa-handshake text-4xl text-blue-600 mb-4"></i>
+                <h3 class="text-2xl font-semibold mb-2">Apoyo en tareas administrativas</h3>
+                <p class="text-zinc-600 max-w-2xl mx-auto">
+                    Además del desarrollo, ofrezco acompañamiento en gestiones administrativas que tu empresa necesite y no sepa cómo resolver. 
+                    <span class="font-medium text-blue-700">Resguardo absoluto de la confidencialidad de la información</span> que me confíes.
+                </p>
+            </div>
+        </div>
+
+        <!-- Breve sobre mí -->
+        <div class="max-w-4xl mx-auto px-6 py-20 text-center">
+            <h2 class="heading text-4xl font-semibold mb-6">Sobre mí</h2>
+            <p class="text-lg text-zinc-600 max-w-2xl mx-auto">
+                Soy Jenner Góngora, Tecnólogo en Desarrollo de Sistemas. Me apasiona crear aplicaciones web funcionales, 
+                intuitivas y seguras que realmente ayuden a las empresas y personas a crecer. Mi enfoque combina la técnica con la comprensión humana.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TECNOLOGÍAS -->
+    <!-- ============================================================ -->
+    <section id="tecnologias" class="page-section">
+        <div class="max-w-6xl mx-auto px-6 py-16">
+            <h2 class="heading text-5xl font-bold text-center mb-4">Tecnologías que domino</h2>
+            <p class="text-center text-zinc-500 mb-12">Haz clic en cada una para leer más acerca del tema</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div onclick="verCurso('html')" class="tech-card bg-white p-8 rounded-3xl border cursor-pointer">
+                    <i class="fab fa-html5 text-6xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-semibold">HTML5</h3>
+                    <p class="text-zinc-500">Estructura y semántica</p>
+                </div>
+                <div onclick="verCurso('css')" class="tech-card bg-white p-8 rounded-3xl border cursor-pointer">
+                    <i class="fab fa-css3-alt text-6xl text-blue-600 mb-6"></i>
+                    <h3 class="text-2xl font-semibold">CSS3</h3>
+                    <p class="text-zinc-500">Diseño responsive</p>
+                </div>
+                <div onclick="verCurso('js')" class="tech-card bg-white p-8 rounded-3xl border cursor-pointer">
+                    <i class="fab fa-js text-6xl text-yellow-500 mb-6"></i>
+                    <h3 class="text-2xl font-semibold">JavaScript</h3>
+                    <p class="text-zinc-500">Lógica del lado del cliente</p>
+                </div>
+                <div onclick="verCurso('laravel')" class="tech-card bg-white p-8 rounded-3xl border cursor-pointer">
+                    <i class="fab fa-laravel text-6xl text-red-500 mb-6"></i>
+                    <h3 class="text-2xl font-semibold">Laravel</h3>
+                    <p class="text-zinc-500">v10 · v11 · v12</p>
+                </div>
+                <div onclick="verCurso('sql')" class="tech-card bg-white p-8 rounded-3xl border cursor-pointer">
+                    <i class="fas fa-database text-6xl text-emerald-600 mb-6"></i>
+                    <h3 class="text-2xl font-semibold">SQL</h3>
+                    <p class="text-zinc-500">Bases de datos</p>
+                </div>
+                <div onclick="verCurso('api')" class="tech-card bg-white p-8 rounded-3xl border cursor-pointer">
+                    <i class="fas fa-plug text-6xl text-purple-600 mb-6"></i>
+                    <h3 class="text-2xl font-semibold">APIs</h3>
+                    <p class="text-zinc-500">Consumo y creación</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- VISTA DE SECCIÓN (contenido extenso) -->
+    <!-- ============================================================ -->
+    <section id="curso-view" class="page-section">
+        <div class="max-w-4xl mx-auto px-6 py-12">
+            <button onclick="backFromCurso()" class="mb-8 flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+                <i class="fas fa-arrow-left"></i> Volver a Tecnologías
+            </button>
+            <div id="curso-content" class="curso-content prose prose-zinc max-w-none"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PSICOLOGÍA (con video corregido) -->
+    <!-- ============================================================ -->
+    <section id="psicologia" class="page-section bg-white py-20">
+        <div class="max-w-4xl mx-auto px-6">
+            <!-- Video de autoestima (solo aquí) -->
+            <div class="video-container mb-8">
+               <iframe src="https://www.youtube.com/embed/1zodAZgvJek?si=vxJe-mKzgC5xf1CH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+            </div>
+            <!-- Declaración de autoestima -->
+            <div class="mb-10 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                <p class="text-blue-800 font-medium text-sm md:text-base">
+                    <i class="fas fa-quote-left text-blue-400 mr-2"></i>
+                    <strong>Mi declaración de autoestima:</strong> 
+                    Confío en mi capacidad para aprender, resolver problemas y construir soluciones que impacten positivamente. 
+                    Mi valor no depende de lo que otros piensen, sino de la coherencia entre mis acciones y mis principios.
+                </p>
+            </div>
+
+            <h2 class="heading text-5xl font-bold mb-10">Psicología y Desarrollo de Software</h2>
+            <div class="prose prose-lg">
+                <p class="text-xl">La tecnología más poderosa es aquella que entiende cómo funciona la mente humana.</p>
+                <p>Como desarrollador, aplico principios psicológicos para crear interfaces intuitivas, reducir frustración y aumentar la productividad tanto de usuarios como de equipos.</p>
+                
+                <h3 class="mt-12 text-2xl font-semibold">Autoestima y desarrollo profesional</h3>
+                <p>La autoestima es la base de un desempeño saludable en cualquier ámbito, y el desarrollo de software no es la excepción. Un desarrollador con una autoestima equilibrada:</p>
+                <ul class="list-disc pl-6 space-y-2 mt-4">
+                    <li><strong>Acepta el error como parte del aprendizaje</strong> y no como un ataque a su valía.</li>
+                    <li><strong>Pide ayuda sin vergüenza</strong>, reconociendo que nadie lo sabe todo.</li>
+                    <li><strong>Recibe feedback constructivo</strong> sin sentirse amenazado, y lo usa para crecer.</li>
+                    <li><strong>Establece límites saludables</strong> entre el trabajo y la vida personal.</li>
+                </ul>
+                <p>La declaración de autoestima que comparto al inicio de esta sección es un recordatorio diario de que mi valor no depende de líneas de código o aprobación externa, sino de mi compromiso con el crecimiento y la coherencia.</p>
+
+                <h3 class="mt-12 text-2xl font-semibold">Recomendaciones para Desarrolladores</h3>
+                <ul class="list-disc pl-6 space-y-4 mt-6">
+                    <li>Usa la <strong>Ley de Hick</strong> para reducir opciones y facilitar decisiones.</li>
+                    <li>Aplica el principio de <strong>progreso visual</strong> en formularios largos.</li>
+                    <li>Diseña con empatía: prueba siempre con usuarios reales.</li>
+                    <li>Cuida tu salud mental y la de tu equipo evitando el burnout.</li>
+                </ul>
+
+                <!-- Síndrome del Impostor (ampliado) -->
+                <div class="bg-blue-50 p-8 rounded-3xl mt-12 border border-blue-100">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-4"><i class="fas fa-user-shield text-3xl mr-3"></i> El Síndrome del Impostor en el Desarrollo</h3>
+                    <p class="text-lg mb-4">El síndrome del impostor es un patrón psicológico donde la persona duda de sus logros y teme ser descubierta como un «fraude». Es increíblemente común en el mundo del desarrollo de software, especialmente entre tecnólogos y autodidactas.</p>
+                    
+                    <h4 class="text-xl font-semibold mt-6 mb-2">¿Cómo se manifiesta?</h4>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Atribuir el éxito a la suerte:</strong> «Aprobé la entrevista porque las preguntas eran fáciles».</li>
+                        <li><strong>Miedo a preguntar:</strong> «Si pregunto esto, pensarán que no sé nada».</li>
+                        <li><strong>Perfeccionismo extremo:</strong> Revisar el código una y otra vez por miedo a errores.</li>
+                        <li><strong>Comparación constante:</strong> Medirse con seniors o influencers de la programación.</li>
+                        <li><strong>Autoexigencia desmedida:</strong> Creer que cualquier error es inaceptable.</li>
+                    </ul>
+
+                    <h4 class="text-xl font-semibold mt-6 mb-2">Estrategias para superarlo</h4>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Registra tus logros:</strong> Lleva un diario de problemas resueltos y tecnologías aprendidas.</li>
+                        <li><strong>Acepta la ignorancia:</strong> La tecnología cambia rápido; nadie lo sabe todo. Aprender es parte del trabajo.</li>
+                        <li><strong>Busca mentoría:</strong> Hablar con colegas más experimentados normaliza las dudas.</li>
+                        <li><strong>Enseña lo que sabes:</strong> Explicar conceptos a otros refuerza tu propia confianza y conocimiento.</li>
+                        <li><strong>Reformula el fracaso:</strong> Cada error es una oportunidad de aprendizaje, no una sentencia sobre tu capacidad.</li>
+                    </ul>
+                    <div class="note mt-6"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> Ser Tecnólogo no significa saberlo todo, significa tener la capacidad de aprender y resolver problemas. El síndrome del impostor disminuye cuando compartes tus conocimientos y ves que otros también aprenden de ti.</div>
+                </div>
+
+                <!-- Carga Cognitiva -->
+                <h3 class="mt-12 text-2xl font-semibold">Carga Cognitiva y UX</h3>
+                <p>La psicología cognitiva nos enseña que la memoria de trabajo es limitada. Un diseño sobrecargado de información genera frustración. Aplica la <strong>regla de los 7±2</strong> elementos en menús y agrupa la información en bloques lógicos.</p>
+                <p>Además, el <strong>efecto de posición serial</strong> (recordar mejor lo primero y lo último) sugiere que coloques la información más importante al principio y al final de las listas o formularios.</p>
+                
+                <!-- Efecto de usuario novato vs experto -->
+                <h3 class="mt-12 text-2xl font-semibold">Usuarios Novatos vs Expertos</h3>
+                <p>Los novatos necesitan guías y ayudas contextuales; los expertos prefieren atajos y accesos rápidos. Un buen software equilibra ambos perfiles mediante <strong>progressive disclosure</strong> (revelar funciones avanzadas según el uso).</p>
+                <p>También es clave el <strong>principio de consistencia</strong>: los usuarios aprenden patrones y esperan que se repitan. Cambiar la ubicación de un botón o el comportamiento de un elemento genera fricción innecesaria.</p>
+
+                <!-- Continuará -->
+                <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                    <p>Continuará...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SEGURIDAD -->
+    <!-- ============================================================ -->
+    <section id="seguridad" class="page-section bg-zinc-100 py-20">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="heading text-5xl font-bold mb-10">Ciberataques más comunes en Colombia</h2>
+            <div class="space-y-10">
+                <div class="bg-white p-8 rounded-3xl">
+                    <h3 class="font-semibold text-xl mb-3">1. Phishing</h3>
+                    <p>El ataque más frecuente. Correos falsos que suplantan bancos, Dian o empresas. Siempre verifica la URL antes de ingresar datos.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl">
+                    <h3 class="font-semibold text-xl mb-3">2. Ransomware</h3>
+                    <p>Secuestro de archivos. Muy común en PYMES. Mantén copias de seguridad offline y actualiza tu software.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl">
+                    <h3 class="font-semibold text-xl mb-3">3. Inyecciones SQL y XSS</h3>
+                    <p>Ataques a sitios web mal protegidos. Usa frameworks modernos como Laravel que protegen por defecto.</p>
+                </div>
+            </div>
+            <!-- Continuará -->
+            <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                <p>Continuará...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- WHATSAPP FLOTANTE -->
+    <!-- ============================================================ -->
+    <div onclick="toggleWA()" class="fixed bottom-8 right-8 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl cursor-pointer hover:bg-green-600 transition-all z-50">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <div id="wa-panel" class="hidden fixed bottom-28 right-8 bg-white rounded-3xl shadow-2xl w-80 z-50">
+        <div class="p-6">
+            <h4 class="font-semibold text-lg mb-4">¿En qué te puedo ayudar?</h4>
+            <p class="text-zinc-600 mb-6">Desarrollo web, consultoría técnica, optimización de sistemas, apoyo administrativo o un nuevo proyecto. Estoy listo para colaborar.</p>
+            <button onclick="contactWA()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-medium">Contactar por WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================================ -->
+    <script>
+        // ---- Navegación entre secciones ----
+        function navigateTo(page) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        }
+
+        // ---- Slider ----
+        let slideIndex = 0;
+        const track = document.getElementById('sliderTrack');
+        const slides = track.querySelectorAll('.slider-slide');
+        const totalSlides = slides.length;
+        let visibleSlides = 1;
+
+        function updateSlider() {
+            const containerWidth = track.parentElement.clientWidth;
+            if (containerWidth < 640) visibleSlides = 1;
+            else if (containerWidth < 1024) visibleSlides = 2;
+            else visibleSlides = 3;
+
+            const slideWidth = containerWidth / visibleSlides;
+            slides.forEach(slide => {
+                slide.style.minWidth = slideWidth + 'px';
+                slide.style.padding = '0 0.5rem';
+            });
+            const maxIndex = Math.max(0, totalSlides - visibleSlides);
+            if (slideIndex > maxIndex) slideIndex = maxIndex;
+            track.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
+        }
+
+        function slideNext() {
+            const maxIndex = Math.max(0, totalSlides - visibleSlides);
+            if (slideIndex < maxIndex) slideIndex++;
+            else slideIndex = 0;
+            updateSlider();
+        }
+
+        function slidePrev() {
+            const maxIndex = Math.max(0, totalSlides - visibleSlides);
+            if (slideIndex > 0) slideIndex--;
+            else slideIndex = maxIndex;
+            updateSlider();
+        }
+
+        window.addEventListener('resize', updateSlider);
+        setTimeout(updateSlider, 100);
+
+        // ---- Ver sección ----
+        function verCurso(curso) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('curso-view').classList.add('active');
+            const content = document.getElementById('curso-content');
+            content.innerHTML = getCursoHTML(curso);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backFromCurso() {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('tecnologias').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ---- Contenido extenso para cada tecnología (con "continuará...") ----
+        function getCursoHTML(curso) {
+            const cursos = {
+                html: `
+                    <h1>Acerca de HTML5</h1>
+                    <p>HTML (HyperText Markup Language) es el lenguaje estándar para crear páginas web. Define la estructura y el contenido de una página mediante etiquetas.</p>
+                    
+                    <h2>Estructura básica y DOCTYPE</h2>
+                    <p>Todo documento HTML comienza con <code>&lt;!DOCTYPE html&gt;</code> y contiene las etiquetas <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> y <code>&lt;body&gt;</code>.</p>
+                    <pre><code>&lt;!DOCTYPE html&gt;
+        &lt;html lang="es"&gt;
+        &lt;head&gt;
+            &lt;meta charset="UTF-8"&gt;
+            &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+            &lt;title&gt;Mi primera página&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;h1&gt;Hola mundo&lt;/h1&gt;
+            &lt;p&gt;Este es mi primer párrafo.&lt;/p&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;</code></pre>
+                    <div class="note"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> Siempre incluye el meta viewport para que tu sitio sea responsive.</div>
+
+                    <h2>Etiquetas semánticas (SEO y Accesibilidad)</h2>
+                    <p>HTML5 introduce etiquetas que describen el contenido: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>.</p>
+                    <pre><code>&lt;header&gt;
+            &lt;h1&gt;Mi sitio&lt;/h1&gt;
+        &lt;/header&gt;
+        &lt;nav&gt;
+            &lt;a href="#"&gt;Inicio&lt;/a&gt;
+            &lt;a href="#"&gt;Servicios&lt;/a&gt;
+        &lt;/nav&gt;
+        &lt;main&gt;
+            &lt;section&gt;
+                &lt;h2&gt;Sección principal&lt;/h2&gt;
+                &lt;p&gt;Contenido relevante.&lt;/p&gt;
+            &lt;/section&gt;
+        &lt;/main&gt;
+        &lt;footer&gt;
+            &lt;p&gt;© 2025&lt;/p&gt;
+        &lt;/footer&gt;</code></pre>
+
+                    <h2>Formularios avanzados y validación</h2>
+                    <p>Los formularios permiten la interacción con el usuario. Usa <code>&lt;form&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;label&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code> y <code>&lt;button&gt;</code>.</p>
+                    <pre><code>&lt;form action="/enviar" method="POST"&gt;
+            &lt;fieldset&gt;
+                &lt;legend&gt;Datos personales&lt;/legend&gt;
+                &lt;label for="nombre"&gt;Nombre:&lt;/label&gt;
+                &lt;input type="text" id="nombre" name="nombre" required placeholder="Tu nombre"&gt;
+                
+                &lt;label for="email"&gt;Email:&lt;/label&gt;
+                &lt;input type="email" id="email" name="email" required&gt;
+                
+                &lt;label for="pais"&gt;País:&lt;/label&gt;
+                &lt;select id="pais" name="pais"&gt;
+                    &lt;option value="co"&gt;Colombia&lt;/option&gt;
+                    &lt;option value="mx"&gt;México&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/fieldset&gt;
+            &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+        &lt;/form&gt;</code></pre>
+                    <div class="note"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> Usa validación nativa con atributos como <code>required</code>, <code>type="email"</code>, <code>pattern</code> y <code>minlength</code>.</p>
+
+                    <h2>Multimedia, iframes y Open Graph</h2>
+                    <p>Incorpora imágenes, videos y audio con <code>&lt;img&gt;</code>, <code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code>. No olvides el atributo <code>alt</code> para accesibilidad.</p>
+                    <pre><code>&lt;img src="foto.jpg" alt="Descripción de la imagen" loading="lazy"&gt;
+        &lt;video controls poster="poster.jpg"&gt;
+            &lt;source src="video.mp4" type="video/mp4"&gt;
+            Tu navegador no soporta video.
+        &lt;/video&gt;
+        &lt;iframe src="https://www.google.com/maps/embed?...&gt;&lt;/iframe&gt;
+        
+        &lt;!-- Meta Open Graph para redes sociales --&gt;
+        &lt;meta property="og:title" content="Mi sitio web"&gt;
+        &lt;meta property="og:image" content="imagen.jpg"&gt;</code></pre>
+                    <div class="note"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> Usa <code>loading="lazy"</code> en imágenes para mejorar el rendimiento.</div>
+
+                    <h2>Microdatos y SEO Estructural</h2>
+                    <p>Los microdatos ayudan a los motores de búsqueda a entender el contenido. Usa <code>itemscope</code>, <code>itemtype</code> y <code>itemprop</code>.</p>
+                    <pre><code>&lt;div itemscope itemtype="https://schema.org/Person"&gt;
+            &lt;span itemprop="name"&gt;Jenner Góngora&lt;/span&gt;
+            &lt;span itemprop="jobTitle"&gt;Tecnólogo en Desarrollo&lt;/span&gt;
+        &lt;/div&gt;</code></pre>
+
+                    <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                        <p>Continuará...</p>
+                    </div>
+                `,
+
+                css: `
+                    <h1>Acerca de CSS3</h1>
+                    <p>CSS (Cascading Style Sheets) controla la presentación visual de las páginas web. Con CSS puedes aplicar colores, fuentes, distribución y efectos.</p>
+
+                    <h2>Selectores, Cascada y Especificidad</h2>
+                    <p>Los selectores apuntan a elementos HTML. La cascada y la especificidad determinan qué reglas se aplican.</p>
+                    <pre><code>/* Selector de elemento */
+        p { color: #333; }
+        
+        /* Selector de clase (más específico) */
+        .destacado { background: yellow; }
+        
+        /* Selector de ID (aún más específico) */
+        #logo { width: 200px; }
+        
+        /* Selector descendente */
+        .contenedor p { margin: 0; }</code></pre>
+                    <div class="note"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> La especificidad se calcula: (0,0,1) para elemento, (0,1,0) para clase, (1,0,0) para ID. <code>!important</code> rompe la cascada, úsalo con moderación.</div>
+
+                    <h2>Modelo de caja y Box-sizing</h2>
+                    <p>Todo elemento es una caja con: contenido, padding, borde y margen. <code>box-sizing: border-box</code> incluye padding y borde en el ancho total.</p>
+                    <pre><code>* { box-sizing: border-box; } /* Reset recomendado */
+        .caja {
+            width: 300px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            margin: 10px auto;
+        }</code></pre>
+
+                    <h2>Flexbox en profundidad</h2>
+                    <p>Flexbox facilita la distribución de elementos en una dimensión (fila o columna).</p>
+                    <pre><code>.flex-container {
+            display: flex;
+            flex-direction: row; /* o column */
+            justify-content: center; /* eje principal */
+            align-items: stretch; /* eje cruzado */
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .flex-item {
+            flex: 1 1 200px; /* grow, shrink, basis */
+        }</code></pre>
+
+                    <h2>CSS Grid Avanzado</h2>
+                    <p>Grid permite diseños bidimensionales complejos. Define filas y columnas explícitamente.</p>
+                    <pre><code>.grid-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: auto 300px auto;
+            gap: 15px;
+        }
+        .item-principal {
+            grid-column: 2 / 4; /* de columna 2 a 4 */
+            grid-row: 1 / 3;
+        }</code></pre>
+
+                    <h2>Variables CSS (Custom Properties)</h2>
+                    <p>Las variables CSS permiten reutilizar valores y facilitan temas dinámicos.</p>
+                    <pre><code>:root {
+            --color-primario: #1e40af;
+            --espaciado: 1.5rem;
+        }
+        .boton {
+            background: var(--color-primario);
+            padding: var(--espaciado);
+        }
+        /* Cambio dinámico con media query o JS */
+        @media (prefers-color-scheme: dark) {
+            :root { --color-primario: #3b82f6; }
+        }</code></pre>
+
+                    <h2>Animaciones y Transiciones</h2>
+                    <p>Las transiciones suavizan cambios de propiedades; las animaciones definen secuencias de estilos.</p>
+                    <pre><code>.boton {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .boton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .modal {
+            animation: fadeIn 0.5s forwards;
+        }</code></pre>
+
+                    <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                        <p>Continuará...</p>
+                    </div>
+                `,
+
+                js: `
+                    <h1>Acerca de JavaScript</h1>
+                    <p>JavaScript es el lenguaje de programación que da vida a las páginas web. Permite manipular el DOM, manejar eventos, hacer peticiones asíncronas y mucho más.</p>
+
+                    <h2>Variables, Scope y Hoisting</h2>
+                    <p>Declara variables con <code>let</code>, <code>const</code> (moderno) o <code>var</code> (antiguo). El scope determina la visibilidad.</p>
+                    <pre><code>let nombre = "Jenner"; // scope de bloque
+        const edad = 30; // no se puede reasignar
+        var antiguo = "obsoleto"; // scope de función
+        
+        // Hoisting: las declaraciones con 'var' se elevan, pero no con 'let/const'
+        console.log(saludo); // undefined (var)
+        var saludo = "Hola";</code></pre>
+
+                    <h2>Funciones, Closures y el contexto 'this'</h2>
+                    <p>Las funciones encapsulan lógica. Los closures "recuerdan" el entorno donde fueron creados.</p>
+                    <pre><code>function saludar(nombre) {
+            return "Hola " + nombre;
+        }
+        const sumar = (a, b) => a + b; // Arrow function (no tiene su propio 'this')
+        
+        function Contador() {
+            let count = 0;
+            return function() {
+                count++;
+                return count;
+            };
+        }
+        const incrementar = Contador();
+        console.log(incrementar()); // 1 (closure activo)</code></pre>
+
+                    <h2>DOM Manipulation y Eventos</h2>
+                    <p>Selecciona elementos con <code>querySelector</code> y modifica su contenido, estilos o atributos.</p>
+                    <pre><code>const titulo = document.querySelector('h1');
+        titulo.textContent = "Nuevo título";
+        titulo.classList.add('activo');
+        
+        const boton = document.getElementById('miBoton');
+        boton.addEventListener('click', (event) => {
+            event.preventDefault();
+            alert('¡Clic!');
+        });</code></pre>
+
+                    <h2>Asincronía, Promesas y Async/Await</h2>
+                    <p>JavaScript es asíncrono por naturaleza. Usa <code>async/await</code> o <code>.then()</code> para manejar promesas.</p>
+                    <pre><code>async function obtenerUsuarios() {
+            try {
+                const respuesta = await fetch('https://api.ejemplo.com/usuarios');
+                if (!respuesta.ok) throw new Error('Error HTTP');
+                const datos = await respuesta.json();
+                console.log(datos);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }</code></pre>
+
+                    <h2>Event Loop, Callbacks y Microtareas</h2>
+                    <p>El Event Loop maneja la concurrencia. <code>setTimeout</code> va a la cola de tareas, las promesas a las microtareas (mayor prioridad).</p>
+                    <pre><code>console.log('1');
+        setTimeout(() => console.log('2'), 0);
+        Promise.resolve().then(() => console.log('3'));
+        console.log('4');
+        // Salida: 1, 4, 3, 2</code></pre>
+
+                    <h2>Módulos ES6 (import/export)</h2>
+                    <p>Divide tu código en archivos modulares para mantenerlo organizado.</p>
+                    <pre><code>// math.js
+        export const sumar = (a, b) => a + b;
+        export default function multiplicar(a, b) { return a * b; }
+        
+        // app.js
+        import multiplicar, { sumar } from './math.js';
+        console.log(sumar(2, 3)); // 5</code></pre>
+                    <div class="note"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> Usa <code>strict mode</code> (<code>"use strict"</code>) para evitar errores comunes.</div>
+
+                    <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                        <p>Continuará...</p>
+                    </div>
+                `,
+
+                laravel: `
+                    <h1>Acerca de Laravel</h1>
+                    <p>Laravel es el framework PHP más popular y elegante. Facilita el desarrollo de aplicaciones web con una sintaxis expresiva y herramientas potentes.</p>
+
+                    <h2>Instalación y Estructura de Directorios</h2>
+                    <p>Instala Laravel con Composer: <code>composer create-project laravel/laravel nombre-proyecto</code></p>
+                    <pre><code>composer create-project laravel/laravel mi-app --prefer-dist</code></pre>
+                    <p>Estructura clave: <code>app/</code> (Modelos, Controladores), <code>routes/</code>, <code>resources/views/</code>, <code>database/migrations/</code>, <code>config/</code>.</p>
+
+                    <h2>Enrutamiento y Controladores</h2>
+                    <p>Define rutas en <code>routes/web.php</code> y asócialas a controladores.</p>
+                    <pre><code>// routes/web.php
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::resource('productos', ProductoController::class);
+        
+        // ProductoController.php
+        public function index() {
+            $productos = Producto::paginate(15);
+            return view('productos.index', compact('productos'));
+        }</code></pre>
+
+                    <h2>Blade Avanzado (Componentes y Slots)</h2>
+                    <p>Blade permite herencia de layouts, componentes reutilizables y directivas condicionales.</p>
+                    <pre><code>&lt;!-- components/boton.blade.php --&gt;
+        &lt;button {{ $attributes-&gt;merge(['class' => 'btn']) }}&gt;
+            {{ $slot }}
+        &lt;/button&gt;
+        
+        &lt;!-- Uso --&gt;
+        &lt;x-boton class="bg-blue-500"&gt;Enviar&lt;/x-boton&gt;</code></pre>
+
+                    <h2>Eloquent ORM (Relaciones y Scopes)</h2>
+                    <p>Eloquent es el ORM de Laravel. Relaciones: <code>belongsTo</code>, <code>hasMany</code>, <code>belongsToMany</code>.</p>
+                    <pre><code>// Modelo Usuario
+        public function posts() {
+            return $this->hasMany(Post::class);
+        }
+        // Modelo Post
+        public function user() {
+            return $this->belongsTo(User::class);
+        }
+        
+        // Scope local
+        public function scopeActivo($query) {
+            return $query->where('activo', true);
+        }
+        // Uso: Usuario::activo()->get();</code></pre>
+
+                    <h2>Migraciones, Factories y Seeders</h2>
+                    <p>Las migraciones versionan la base de datos. Factories generan datos de prueba.</p>
+                    <pre><code>php artisan make:migration create_productos_table
+        // En la migración
+        Schema::create('productos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->foreignId('categoria_id')->constrained();
+            $table->timestamps();
+        });
+        
+        // Factory
+        Producto::factory()->count(100)->create();</code></pre>
+
+                    <h2>Autenticación, Gates y Policies</h2>
+                    <p>Laravel ofrece autenticación con <code>php artisan make:auth</code> (legacy) o <code>Jetstream</code>/<code>Breeze</code>. Para autorización, usa Gates y Policies.</p>
+                    <pre><code>// App\Providers\AuthServiceProvider
+        Gate::define('editar-producto', function ($user, $producto) {
+            return $user->id === $producto->user_id;
+        });
+        
+        // En el controlador
+        if (auth()->user()->can('editar-producto', $producto)) { ... }</code></pre>
+                    <div class="note"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> Usa <code>php artisan make:model -m</code> para crear modelo y migración a la vez.</div>
+
+                    <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                        <p>Continuará...</p>
+                    </div>
+                `,
+
+                sql: `
+                    <h1>Acerca de SQL</h1>
+                    <p>SQL (Structured Query Language) es el lenguaje estándar para manejar bases de datos relacionales. Permite consultar, insertar, actualizar y eliminar datos.</p>
+
+                    <h2>Consultas SELECT y Filtros</h2>
+                    <p>La sentencia <code>SELECT</code> recupera datos de una o más tablas.</p>
+                    <pre><code>SELECT * FROM usuarios;
+        SELECT nombre, email FROM clientes WHERE ciudad = 'Bogotá';
+        SELECT * FROM productos WHERE precio BETWEEN 100 AND 500;
+        SELECT * FROM pedidos ORDER BY fecha DESC LIMIT 10;</code></pre>
+
+                    <h2>JOINs (INNER, LEFT, RIGHT, FULL)</h2>
+                    <p>Los JOINs combinan registros de dos o más tablas.</p>
+                    <pre><code>-- INNER JOIN: solo coincidencias
+        SELECT usuarios.nombre, pedidos.total
+        FROM usuarios
+        INNER JOIN pedidos ON usuarios.id = pedidos.usuario_id;
+        
+        -- LEFT JOIN: todos los usuarios aunque no tengan pedidos
+        SELECT usuarios.nombre, COALESCE(pedidos.total, 0) AS total
+        FROM usuarios
+        LEFT JOIN pedidos ON usuarios.id = pedidos.usuario_id;</code></pre>
+
+                    <h2>Funciones de Agregación y GROUP BY</h2>
+                    <p>Agrupa datos con <code>GROUP BY</code> y usa <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MAX</code>, <code>MIN</code>.</p>
+                    <pre><code>SELECT categoria, 
+               COUNT(*) AS total_productos,
+               AVG(precio) AS precio_promedio
+        FROM productos
+        GROUP BY categoria
+        HAVING total_productos > 5;</code></pre>
+
+                    <h2>Subconsultas y CTEs (WITH)</h2>
+                    <p>Las subconsultas son consultas anidadas. Las CTEs (Common Table Expressions) mejoran la legibilidad.</p>
+                    <pre><code>-- Subconsulta
+        SELECT nombre FROM usuarios
+        WHERE id IN (SELECT usuario_id FROM pedidos WHERE total > 500);
+        
+        -- CTE
+        WITH pedidos_altos AS (
+            SELECT usuario_id, SUM(total) AS total_gastado
+            FROM pedidos
+            GROUP BY usuario_id
+            HAVING SUM(total) > 1000
+        )
+        SELECT u.nombre, p.total_gastado
+        FROM usuarios u
+        INNER JOIN pedidos_altos p ON u.id = p.usuario_id;</code></pre>
+
+                    <h2>Índices y Optimización</h2>
+                    <p>Los índices aceleran las consultas <code>WHERE</code> y <code>JOIN</code>.</p>
+                    <pre><code>CREATE INDEX idx_email ON usuarios(email);
+        CREATE INDEX idx_productos_categoria_precio ON productos(categoria, precio);
+        
+        -- Analiza el plan de ejecución
+        EXPLAIN SELECT * FROM usuarios WHERE email = 'test@mail.com';</code></pre>
+
+                    <h2>Transacciones, Procedimientos y Triggers</h2>
+                    <p>Las transacciones aseguran consistencia. Los procedimientos almacenan lógica en el servidor.</p>
+                    <pre><code>BEGIN TRANSACTION;
+        UPDATE cuentas SET saldo = saldo - 100 WHERE id = 1;
+        UPDATE cuentas SET saldo = saldo + 100 WHERE id = 2;
+        COMMIT; -- o ROLLBACK si hay error
+        
+        -- Procedimiento almacenado (MySQL)
+        DELIMITER //
+        CREATE PROCEDURE obtener_usuarios_activos()
+        BEGIN
+            SELECT * FROM usuarios WHERE activo = 1;
+        END //
+        DELIMITER ;</code></pre>
+                    <div class="warning-box"><i class="fas fa-exclamation-triangle"></i> <strong>Precaución:</strong> Las transacciones largas pueden bloquear tablas. Úsalas solo cuando sea necesario.</div>
+
+                    <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                        <p>Continuará...</p>
+                    </div>
+                `,
+
+                api: `
+                    <h1>Acerca de APIs y Consumo</h1>
+                    <p>Una API (Application Programming Interface) permite que aplicaciones se comuniquen entre sí. Las APIs RESTful son las más comunes en la web.</p>
+
+                    <h2>Principios REST y Verbos HTTP</h2>
+                    <p>REST usa verbos HTTP: GET (leer), POST (crear), PUT (actualizar total), PATCH (actualizar parcial), DELETE (eliminar).</p>
+                    <pre><code>GET    /api/usuarios       → Listar usuarios
+        POST   /api/usuarios       → Crear usuario
+        GET    /api/usuarios/1     → Obtener usuario específico
+        PUT    /api/usuarios/1     → Reemplazar usuario
+        DELETE /api/usuarios/1     → Eliminar usuario</code></pre>
+
+                    <h2>Consumo Avanzado con Fetch y Axios</h2>
+                    <p><code>fetch</code> es nativo, <code>Axios</code> ofrece más funcionalidades (interceptores, transformación automática).</p>
+                    <pre><code>// Fetch con manejo de errores
+        async function crearUsuario(datos) {
+            const response = await fetch('/api/usuarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message);
+            }
+            return response.json();
+        }
+        
+        // Axios (requiere CDN)
+        axios.post('/api/usuarios', datos)
+            .then(res => console.log(res.data))
+            .catch(err => console.error(err.response.data));</code></pre>
+
+                    <h2>Autenticación (JWT, API Keys, OAuth2)</h2>
+                    <p>JWT (JSON Web Tokens) es el estándar más usado para APIs. El cliente envía el token en el header <code>Authorization</code>.</p>
+                    <pre><code>// Almacenar token (ejemplo con localStorage)
+        localStorage.setItem('token', token);
+        
+        // Enviar en cada petición
+        fetch('/api/perfil', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        });</code></pre>
+
+                    <h2>Códigos de Estado HTTP y Manejo de Errores</h2>
+                    <p>Códigos comunes: 200 OK, 201 Creado, 400 Bad Request, 401 No autenticado, 403 Prohibido, 404 No encontrado, 500 Error interno.</p>
+                    <pre><code>if (response.status === 401) {
+            // Redirigir al login
+            window.location.href = '/login';
+        } else if (response.status === 422) {
+            const errors = await response.json();
+            // Mostrar errores de validación
+        }</code></pre>
+
+                    <h2>Rate Limiting, Paginación y Caching</h2>
+                    <p>Las APIs suelen limitar el número de peticiones. La paginación se maneja con parámetros <code>page</code> y <code>limit</code>.</p>
+                    <pre><code>// Paginación
+        const pagina = 2;
+        const limite = 20;
+        fetch(\`/api/productos?page=\${pagina}&limit=\${limite}\`);
+        
+        // Headers de rate limiting
+        // X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset</code></pre>
+
+                    <h2>Documentación con OpenAPI/Swagger y Webhooks</h2>
+                    <p>La documentación interactiva facilita el consumo. Los Webhooks notifican eventos a URLs externas.</p>
+                    <pre><code>// Ejemplo de Webhook (enviar notificación)
+        fetch('https://mi-sistema.com/webhook/pedido-creado', {
+            method: 'POST',
+            body: JSON.stringify({ pedido_id: 123, estado: 'confirmado' })
+        });</code></pre>
+                    <div class="note"><i class="fas fa-lightbulb"></i> <strong>Leer más:</strong> Usa Postman o Insomnia para probar y documentar tus APIs.</div>
+
+                    <div class="mt-12 text-center text-zinc-400 italic border-t pt-8">
+                        <p>Continuará...</p>
+                    </div>
+                `
+            };
+            return cursos[curso] || '<p>Sección no encontrada</p>';
+        }
+
+        // ---- WhatsApp ----
+        function toggleWA() {
+            document.getElementById('wa-panel').classList.toggle('hidden');
+        }
+
+        function contactWA() {
+            window.open('https://wa.me/573239486845?text=Hola%20Jenner%2C%20vi%20tu%20sitio%20y%20me%20gustar%C3%ADa%20contactarte.', '_blank');
+        }
+
+        // ---- Inicialización ----
+        navigateTo('home');
+    </script>
+</body>
+</html>
