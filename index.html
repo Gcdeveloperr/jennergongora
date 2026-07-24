@@ -46,7 +46,7 @@
         .slider-btn.prev { left: 0.5rem; }
         .slider-btn.next { right: 0.5rem; }
 
-        /* Subnav pills usadas en Psicología y Seguridad */
+        /* Subnav pills usadas en Psicología, Seguridad y Leer */
         .pill-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; }
         .pill {
             display: inline-flex; align-items: center; gap: 0.4rem;
@@ -55,6 +55,8 @@
             color: #52525b; cursor: pointer; transition: all .2s ease; white-space: nowrap;
         }
         .pill:hover { border-color: #1e40af; color: #1e40af; }
+        .pill.active-cat { background: #1e40af; border-color: #1e40af; color: #fff; }
+        .pill.active-cat:hover { color: #fff; }
 
         /* Curso / contenido largo */
         .curso-content h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; }
@@ -104,6 +106,16 @@
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
+        /* Tarjetas de frases (sección Leer) */
+        .quote-card {
+            display: flex; flex-direction: column; position: relative;
+        }
+        .quote-card .quote-mark {
+            position: absolute; top: 1.1rem; right: 1.3rem; font-size: 1.6rem; opacity: 0.12;
+        }
+        .quote-card p.quote-text { flex-grow: 1; }
+        .quote-card p.quote-author { border-top: 1px solid #f0f0f2; padding-top: 0.75rem; margin-top: 0.75rem; }
+
         @media (max-width: 640px) {
             .curso-content h1 { font-size: 2rem; }
             .curso-content h2 { font-size: 1.5rem; }
@@ -128,6 +140,7 @@
 
             <div class="flex items-center gap-6 text-sm font-medium flex-wrap">
                 <a href="#" onclick="navigateTo('home')" class="nav-link active text-zinc-600 hover:text-blue-700"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#" onclick="navigateTo('leer')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-book-open"></i> Leer</a>
                 <a href="#" onclick="navigateTo('tecnologias')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-code"></i> Tecnologías</a>
                 <a href="#" onclick="navigateTo('psicologia')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-brain"></i> Bienestar Digital</a>
                 <a href="#" onclick="navigateTo('seguridad')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-shield-alt"></i> Ciberseguridad</a>
@@ -272,6 +285,36 @@
                 Soy Jenner Góngora, Tecnólogo en Desarrollo de Sistemas. Me apasiona crear aplicaciones web funcionales,
                 intuitivas y seguras que realmente ayuden a las empresas y personas a crecer. Mi enfoque combina la técnica con la comprensión humana.
             </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- LEER (frases célebres) -->
+    <!-- ============================================================ -->
+    <section id="leer" class="page-section bg-zinc-50 py-20">
+        <div class="max-w-6xl mx-auto px-6">
+
+            <div class="text-center mb-10">
+                <span class="inline-flex items-center gap-2 text-amber-700 bg-amber-50 px-4 py-1.5 rounded-full text-sm font-medium">
+                    <i class="fas fa-book-open"></i> Rincón de Lectura
+                </span>
+                <h2 class="heading text-5xl font-bold mt-5 mb-4">Frases para pensar y emprender</h2>
+                <p class="text-lg text-zinc-500 max-w-2xl mx-auto">
+                    Una selección de más de <span id="leer-total" class="font-semibold text-zinc-700">200</span> frases célebres,
+                    profundas y trascendentes, de los pensadores, poetas y empresarios más influyentes de la historia.
+                </p>
+            </div>
+
+            <div class="pill-nav justify-center mb-3" id="leer-pills">
+               <!-- <span class="pill" data-cat="amor" onclick="seleccionarCategoria('amor')"><i class="fas fa-heart"></i> Amor</span> -->
+                <span class="pill" data-cat="sabiduria" onclick="seleccionarCategoria('sabiduria')"><i class="fas fa-brain"></i> Sabiduría</span>
+                <span class="pill" data-cat="empresa" onclick="seleccionarCategoria('empresa')"><i class="fas fa-briefcase"></i> Empresariales</span>
+            </div>
+            <p class="text-center text-sm text-zinc-400 mb-10">
+                <span id="leer-contador">0</span> frases en esta categoría
+            </p>
+
+            <div id="leer-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
     </section>
 
@@ -1338,8 +1381,282 @@
             window.open('https://wa.me/573239486845?text=Hola%20Jenner%2C%20vi%20tu%20sitio%20y%20me%20gustar%C3%ADa%20contactarte.', '_blank');
         }
 
+        // ============================================================
+        // RINCÓN DE LECTURA — Frases célebres (Amor, Sabiduría, Empresariales)
+        // ============================================================
+        const frasesData = {
+            amor: [
+                {t:`El amor no mira con los ojos, sino con el alma.`, a:`William Shakespeare`},
+                {t:`Puedo escribir los versos más tristes esta noche.`, a:`Pablo Neruda`},
+                {t:`No hay medicina que cure lo que no cura la felicidad.`, a:`Gabriel García Márquez`},
+                {t:`La suprema felicidad de la vida es la convicción de ser amado.`, a:`Victor Hugo`},
+                {t:`El amor es como los ríos: nunca vuelven a su cauce.`, a:`Gustave Flaubert`},
+                {t:`La herida es el lugar por donde entra la luz.`, a:`Rumi`},
+                {t:`El amor no posee ni quiere ser poseído.`, a:`Khalil Gibran`},
+                {t:`Amarse a uno mismo es el comienzo de un romance para toda la vida.`, a:`Oscar Wilde`},
+                {t:`El amor sin límites es la única moneda que crece cuanto más se gasta.`, a:`Mark Twain`},
+                {t:`Nadie te ha enseñado a amar sin exigir nada a cambio.`, a:`Julio Cortázar`},
+                {t:`Del amor he sabido lo que saben los libros.`, a:`Jorge Luis Borges`},
+                {t:`Te quiero porque tus manos trabajan por la justicia.`, a:`Mario Benedetti`},
+                {t:`El corazón que más te quiera, no te querrá lo que yo.`, a:`Federico García Lorca`},
+                {t:`Amar es combatir, es abrir puertas, dejar de ser fantasma.`, a:`Octavio Paz`},
+                {t:`El amor y la fe luchan contra los imposibles.`, a:`Miguel de Cervantes`},
+                {t:`No se diga que el amor es ciego, sino que ve más allá de lo visible.`, a:`Sor Juana Inés de la Cruz`},
+                {t:`El mundo es un lugar hermoso y vale la pena luchar por él, y por amor.`, a:`Ernest Hemingway`},
+                {t:`Fue como si de repente saliera a la vida gracias a su amor.`, a:`F. Scott Fitzgerald`},
+                {t:`El amor es una niebla que se disipa con la primera luz de la realidad.`, a:`Charles Bukowski`},
+                {t:`El amor es todo lo que existe, es todo lo que sabemos del amor.`, a:`Emily Dickinson`},
+                {t:`¿Cómo te amo? Déjame contar las formas.`, a:`Elizabeth Barrett Browning`},
+                {t:`El amor verdadero es como los fantasmas: todos hablan de él, pocos lo han visto.`, a:`Nicholas Sparks`},
+                {t:`Cuando amas, las cosas adquieren aún más sentido.`, a:`Paulo Coelho`},
+                {t:`El amor es como un incendio, hay que dejarlo arder.`, a:`Isabel Allende`},
+                {t:`Todo lo comprendo, solo por amor.`, a:`Leo Tolstoi`},
+                {t:`Solo puedo amarte de un modo profundo, ardiente y sincero.`, a:`Jane Austen`},
+                {t:`Un beso puede no ser el principio del amor, ni el olvido su final.`, a:`Marilyn Monroe`},
+                {t:`Cuando amas a alguien, todo cobra sentido.`, a:`Audrey Hepburn`},
+                {t:`El amor es la fuerza más poderosa que existe, porque es infinita.`, a:`Albert Einstein`},
+                {t:`El amor es el deseo de lo que nos falta.`, a:`Platón`},
+                {t:`El amor consiste en esto: dos soledades que se protegen.`, a:`Rainer Maria Rilke`},
+                {t:`Vivimos según nuestra imaginación de nosotros mismos, y así también amamos.`, a:`Anaïs Nin`},
+                {t:`El amor auténtico debe fundarse en el reconocimiento mutuo.`, a:`Simone de Beauvoir`},
+                {t:`El amor exige un milagro: amar a alguien más allá del deseo.`, a:`Jean-Paul Sartre`},
+                {t:`El secreto de una buena vejez es un pacto honrado con la soledad, y el amor.`, a:`Gabriel García Márquez`},
+                {t:`Amemos, porque de esa combustión sublime e involuntaria, el amor nace.`, a:`Amado Nervo`},
+                {t:`Me gustas cuando callas porque estás como ausente.`, a:`Pablo Neruda`},
+                {t:`Quiero hacer contigo lo que la primavera hace con los cerezos.`, a:`Pablo Neruda`},
+                {t:`Duda que las estrellas sean fuego, duda que el sol se mueva, mas nunca dudes que te amo.`, a:`William Shakespeare`},
+                {t:`Amar es la mitad de creer.`, a:`Victor Hugo`},
+                {t:`Lo esencial es invisible a los ojos, solo se ve bien con el corazón.`, a:`Antoine de Saint-Exupéry`},
+                {t:`Cuando amas no deberías decir que Dios está en tu corazón, sino que tú estás en el corazón de Dios.`, a:`Khalil Gibran`},
+                {t:`Que la belleza que amamos sea lo que hagamos.`, a:`Rumi`},
+                {t:`El que ama profundamente algo, recibe de ello coraje.`, a:`Confucio`},
+                {t:`El amor abre la puerta a todo lo que somos y a todo lo que podemos llegar a ser.`, a:`Lao Tsé`},
+                {t:`Si quieres ser amado, ama.`, a:`Séneca`},
+                {t:`Ama y haz lo que quieras.`, a:`San Agustín`},
+                {t:`El amor es lo único que crece cuando se reparte.`, a:`Sócrates`},
+                {t:`Escribiendo estoy con la mano, mas con el alma escribo lo que no puedo decir.`, a:`Miguel Hernández`},
+                {t:`Mientras exista una mujer hermosa, habrá poesía y habrá amor.`, a:`Gustavo Adolfo Bécquer`},
+                {t:`Volverán las oscuras golondrinas, pero aquellas que aprendieron nuestros nombres, esas no volverán.`, a:`Gustavo Adolfo Bécquer`},
+                {t:`Un hombre traza un mapa del mundo y descubre que ese laberinto dibuja el rostro de su amada.`, a:`Jorge Luis Borges`},
+                {t:`El amor es ciego, pero los celos ven demasiado.`, a:`Mario Vargas Llosa`},
+                {t:`El amor y el deseo son cosas distintas, pero se necesitan mutuamente.`, a:`Isabel Allende`},
+                {t:`El amor comienza cuando una mujer entra en nuestra memoria poética.`, a:`Milan Kundera`},
+                {t:`El amor maduro dice: te necesito porque te amo.`, a:`Erich Fromm`},
+                {t:`Amar es la única respuesta satisfactoria al problema de la existencia humana.`, a:`Erich Fromm`},
+                {t:`Todas las cartas de amor son ridículas; no serían de amor si no lo fueran.`, a:`Fernando Pessoa`},
+                {t:`No hay mayor abandono que el de comprender del todo a quien se ama.`, a:`Julio Cortázar`},
+                {t:`Amar y ser amado es sentir el sol desde ambos lados.`, a:`Anónimo`},
+                {t:`No hay felicidad completa sin la locura del amor.`, a:`Victor Hugo`},
+                {t:`El amor te da la libertad de ser completamente tú mismo.`, a:`William Butler Yeats`},
+                {t:`Te quiero para tenerte, para verte, para saber que existes.`, a:`Nicolás Guillén`},
+                {t:`Amar, amar siempre y con todo el ser, con la tierra y con el cielo.`, a:`Rubén Darío`},
+                {t:`En paz voy, si me faltó algo, entendí también que fui amado.`, a:`Amado Nervo`},
+                {t:`Amar es entregarse sin condiciones y esperar sin exigencias.`, a:`Gabriela Mistral`},
+                {t:`El amor es entendimiento mutuo y confianza plena.`, a:`Gabriela Mistral`},
+                {t:`Quiero amar libremente, sin cadenas, como el mar ama a la luna.`, a:`Alfonsina Storni`},
+                {t:`Hay que amar como si nunca se hubiese sufrido.`, a:`Gustave Flaubert`},
+                {t:`Un toque, una sonrisa, una palabra amable tienen el poder de cambiar una vida.`, a:`Leo Buscaglia`},
+                {t:`Si conoces a alguien y sientes amor hacia esa persona, díselo.`, a:`Hermann Hesse`},
+                {t:`El amor que no se renueva cada día se convierte en costumbre, y luego en esclavitud.`, a:`Khalil Gibran`},
+                {t:`El amor es un espacio y un tiempo medido por el corazón.`, a:`Marcel Proust`},
+                {t:`El amor es una tela que la naturaleza teje y la imaginación borda.`, a:`Voltaire`},
+                {t:`El amor verdadero no busca poseer, sino comprender.`, a:`Anónimo Sufí`}
+            ],
+            sabiduria: [
+                {t:`El hombre que mueve una montaña comienza cargando pequeñas piedras.`, a:`Confucio`},
+                {t:`Un viaje de mil millas comienza con un solo paso.`, a:`Lao Tsé`},
+                {t:`Solo sé que no sé nada.`, a:`Sócrates`},
+                {t:`La ignorancia es la raíz y el tallo de todo mal.`, a:`Platón`},
+                {t:`Conócete a ti mismo y conocerás el universo.`, a:`Aristóteles`},
+                {t:`No es que tengamos poco tiempo, sino que perdemos mucho.`, a:`Séneca`},
+                {t:`Nuestra vida es lo que nuestros pensamientos hacen de ella.`, a:`Marco Aurelio`},
+                {t:`La mente lo es todo; en lo que piensas, te conviertes.`, a:`Buda`},
+                {t:`Conoce a tu enemigo y conócete a ti mismo; en cien batallas, nunca serás derrotado.`, a:`Sun Tzu`},
+                {t:`La imaginación es más importante que el conocimiento.`, a:`Albert Einstein`},
+                {t:`La sabiduría es hija de la experiencia.`, a:`Leonardo da Vinci`},
+                {t:`Sé el cambio que quieres ver en el mundo.`, a:`Mahatma Gandhi`},
+                {t:`Siempre parece imposible hasta que se hace.`, a:`Nelson Mandela`},
+                {t:`Lo que hay dentro de ti importa más que lo que está delante o detrás.`, a:`Ralph Waldo Emerson`},
+                {t:`Dime y lo olvido, enséñame y lo recuerdo, involúcrame y lo aprendo.`, a:`Benjamin Franklin`},
+                {t:`Lo que no te mata, te hace más fuerte.`, a:`Friedrich Nietzsche`},
+                {t:`El sentido común es bastante poco común.`, a:`Voltaire`},
+                {t:`Atrévete a pensar por ti mismo.`, a:`Immanuel Kant`},
+                {t:`Ser o no ser, esa es la cuestión.`, a:`William Shakespeare`},
+                {t:`La pluma es la lengua del alma.`, a:`Miguel de Cervantes`},
+                {t:`Todos piensan en cambiar el mundo, pero nadie piensa en cambiarse a sí mismo.`, a:`León Tolstoi`},
+                {t:`El conocimiento de uno mismo es la madre de toda sabiduría.`, a:`Khalil Gibran`},
+                {t:`Ayer era astuto y quería cambiar el mundo; hoy soy sabio y me cambio a mí mismo.`, a:`Rumi`},
+                {t:`Nadie se baña dos veces en el mismo río.`, a:`Heráclito`},
+                {t:`No son las cosas las que perturban a los hombres, sino los juicios sobre ellas.`, a:`Epicteto`},
+                {t:`El fundamento de todo estado es la educación de su juventud.`, a:`Diógenes`},
+                {t:`Educad a los niños y no será necesario castigar a los hombres.`, a:`Pitágoras`},
+                {t:`El éxito consiste en ir de fracaso en fracaso sin perder el entusiasmo.`, a:`Winston Churchill`},
+                {t:`La mejor manera de predecir el futuro es creándolo.`, a:`Abraham Lincoln`},
+                {t:`No he fracasado, he encontrado diez mil maneras que no funcionan.`, a:`Thomas Edison`},
+                {t:`El secreto para salir adelante es comenzar.`, a:`Mark Twain`},
+                {t:`Sé tú mismo, los demás puestos ya están ocupados.`, a:`Oscar Wilde`},
+                {t:`Cuando quieres algo, todo el universo conspira para que realices tu deseo.`, a:`Paulo Coelho`},
+                {t:`Solo con el corazón se puede ver bien; lo esencial es invisible a los ojos.`, a:`Antoine de Saint-Exupéry`},
+                {t:`Vacía tu mente, sé sin forma, como el agua.`, a:`Bruce Lee`},
+                {t:`Quien mira hacia afuera, sueña; quien mira hacia adentro, despierta.`, a:`Carl Jung`},
+                {t:`La vida se encoge o se expande en proporción al valor de uno.`, a:`Anaïs Nin`},
+                {t:`La felicidad de tu vida depende de la calidad de tus pensamientos.`, a:`Marco Aurelio`},
+                {t:`No importa cuán despacio vayas, siempre y cuando no te detengas.`, a:`Confucio`},
+                {t:`Una vida sin examen no merece la pena ser vivida.`, a:`Sócrates`},
+                {t:`Quien conoce a los demás es sabio; quien se conoce a sí mismo es iluminado.`, a:`Lao Tsé`},
+                {t:`Somos lo que hacemos repetidamente; la excelencia no es un acto sino un hábito.`, a:`Aristóteles`},
+                {t:`Las dificultades fortalecen la mente, como el trabajo fortalece el cuerpo.`, a:`Séneca`},
+                {t:`Tres cosas no pueden esconderse por mucho tiempo: el sol, la luna y la verdad.`, a:`Buda`},
+                {t:`No es la especie más fuerte la que sobrevive, sino la que mejor se adapta al cambio.`, a:`Charles Darwin`},
+                {t:`No se puede enseñar nada a un hombre; solo ayudarlo a encontrarlo dentro de sí mismo.`, a:`Galileo Galilei`},
+                {t:`Si he visto más lejos es porque estoy sentado sobre hombros de gigantes.`, a:`Isaac Newton`},
+                {t:`En la vida no hay nada que temer, solo cosas que comprender.`, a:`Marie Curie`},
+                {t:`Cuando ya no podemos cambiar una situación, se nos desafía a cambiarnos a nosotros mismos.`, a:`Viktor Frankl`},
+                {t:`El carácter no se desarrolla con facilidad y tranquilidad.`, a:`Helen Keller`},
+                {t:`Cuando el sabio señala la luna, el necio mira el dedo.`, a:`Proverbio chino`},
+                {t:`Quien no sabe y sabe que no sabe, es sencillo: enséñale.`, a:`Proverbio árabe`},
+                {t:`Cae siete veces, levántate ocho.`, a:`Proverbio japonés`},
+                {t:`Si quieres ir rápido, ve solo; si quieres llegar lejos, ve acompañado.`, a:`Proverbio africano`},
+                {t:`Un momento de impaciencia puede arruinar toda una vida.`, a:`Proverbio budista`},
+                {t:`La sabiduría deja de ser sabiduría cuando se vuelve demasiado orgullosa para llorar.`, a:`Khalil Gibran`},
+                {t:`Deja que te rompa el silencio, para que aprendas la sabiduría del vacío.`, a:`Rumi`},
+                {t:`El hombre superior es modesto en su discurso, pero excede en sus acciones.`, a:`Confucio`},
+                {t:`La raíz de la educación es amarga, pero el fruto es dulce.`, a:`Aristóteles`},
+                {t:`El precio que pagan los hombres buenos por su indiferencia es ser gobernados por hombres malos.`, a:`Platón`},
+                {t:`Es propio del hombre sabio no lamentarse por lo que no tiene, sino alegrarse por lo que tiene.`, a:`Marco Aurelio`},
+                {t:`La suerte es lo que ocurre cuando la preparación se encuentra con la oportunidad.`, a:`Séneca`},
+                {t:`La simplicidad es la máxima sofisticación.`, a:`Leonardo da Vinci`},
+                {t:`El progreso consiste en renovarse.`, a:`Miguel de Unamuno`},
+                {t:`Me figuraba el Paraíso bajo la especie de una biblioteca.`, a:`Jorge Luis Borges`},
+                {t:`La verdad no tiene tiempo que perder con la esperanza y la desesperación de los hombres.`, a:`Octavio Paz`},
+                {t:`La sabiduría nos llega cuando ya no nos sirve de nada.`, a:`Gabriel García Márquez`},
+                {t:`Aprender sin pensar es inútil; pensar sin aprender es peligroso.`, a:`Confucio`},
+                {t:`La naturaleza no tiene prisa, sin embargo todo se logra.`, a:`Lao Tsé`},
+                {t:`No hay camino hacia la felicidad; la felicidad es el camino.`, a:`Buda`},
+                {t:`No arruines lo que tienes deseando lo que no tienes.`, a:`Epicuro`},
+                {t:`El que pregunta es un necio cinco minutos; el que no pregunta lo es toda la vida.`, a:`Proverbio hindú`},
+                {t:`Quien salva una vida, salva al mundo entero.`, a:`Sabiduría del Talmud`},
+                {t:`El que quiere educar sin arriesgarse, se equivoca de oficio.`, a:`Sócrates`},
+                {t:`Lo que hacemos ahora resuena en la eternidad.`, a:`Marco Aurelio`}
+            ],
+            empresa: [
+                {t:`La única forma de hacer un gran trabajo es amar lo que haces.`, a:`Steve Jobs`},
+                {t:`Si crees que puedes o que no puedes, en ambos casos tienes razón.`, a:`Henry Ford`},
+                {t:`Tu cliente más insatisfecho es tu mayor fuente de aprendizaje.`, a:`Bill Gates`},
+                {t:`Si duplicas el número de experimentos que haces por año, vas a duplicar tu inventiva.`, a:`Jeff Bezos`},
+                {t:`Cuando algo es lo suficientemente importante, lo haces aunque las probabilidades no estén a tu favor.`, a:`Elon Musk`},
+                {t:`El riesgo viene de no saber lo que estás haciendo.`, a:`Warren Buffett`},
+                {t:`La mejor manera de predecir el futuro es crearlo.`, a:`Peter Drucker`},
+                {t:`Si puedes soñarlo, puedes hacerlo.`, a:`Walt Disney`},
+                {t:`Los negocios son la forma de arte del siglo XXI.`, a:`Richard Branson`},
+                {t:`El mayor riesgo es no correr ningún riesgo.`, a:`Mark Zuckerberg`},
+                {t:`Siempre apuntamos a los objetivos más grandes, incluso si el riesgo de fracaso es alto.`, a:`Larry Page`},
+                {t:`Supera las expectativas de tus clientes y volverán una y otra vez.`, a:`Sam Walton`},
+                {t:`Antes de ser líder, el éxito consiste en crecer tú mismo; después, en hacer crecer a los demás.`, a:`Jack Welch`},
+                {t:`Nadie se convierte en un gran líder si busca hacer todo por sí mismo.`, a:`Andrew Carnegie`},
+                {t:`Prefiero ganar el uno por ciento del esfuerzo de cien personas que el cien por cien del mío.`, a:`John D. Rockefeller`},
+                {t:`Si quieres tener éxito, duplica tu tasa de fracaso.`, a:`Thomas J. Watson`},
+                {t:`El liderazgo es difícil de definir, pero el buen liderazgo se reconoce cuando se ve.`, a:`Indra Nooyi`},
+                {t:`Hecho es mejor que perfecto.`, a:`Sheryl Sandberg`},
+                {t:`El pensamiento crea nuestro futuro; donde ponemos nuestra atención es donde vamos.`, a:`Oprah Winfrey`},
+                {t:`El éxito deja pistas.`, a:`Tony Robbins`},
+                {t:`No tienes que ser grandioso para empezar, pero tienes que empezar para ser grandioso.`, a:`Zig Ziglar`},
+                {t:`Lo que la mente puede concebir y creer, la mente puede lograrlo.`, a:`Napoleon Hill`},
+                {t:`El que teme fracasar limita sus propias actividades.`, a:`Dale Carnegie`},
+                {t:`Trabaja más duro en ti mismo que en tu trabajo.`, a:`Jim Rohn`},
+                {t:`El trabajo duro no es suficiente; hay que pensar diferente para lograr éxito financiero.`, a:`Robert Kiyosaki`},
+                {t:`Es más fácil cambiar la forma en que piensas que cambiar la forma en que actúas.`, a:`Seth Godin`},
+                {t:`La gente no compra lo que haces, compra por qué lo haces.`, a:`Simon Sinek`},
+                {t:`Si no te avergüenza la primera versión de tu producto, la lanzaste demasiado tarde.`, a:`Reid Hoffman`},
+                {t:`El éxito se comparte mejor.`, a:`Howard Schultz`},
+                {t:`Nunca dejé que un problema me quitara el sueño, excepto cómo lograr que un producto tuviera éxito.`, a:`Estée Lauder`},
+                {t:`Para ser irremplazable, uno debe ser siempre diferente.`, a:`Coco Chanel`},
+                {t:`Mientras seas verde, estarás creciendo; en el momento en que maduras, comienzas a pudrirte.`, a:`Ray Kroc`},
+                {t:`Reunirse en equipo es el principio, mantenerse en equipo es el progreso, trabajar en equipo asegura el éxito.`, a:`Henry Ford`},
+                {t:`La innovación distingue a un líder de un seguidor.`, a:`Steve Jobs`},
+                {t:`Tu marca es lo que la gente dice de ti cuando no estás en la sala.`, a:`Jeff Bezos`},
+                {t:`Es bueno celebrar el éxito, pero es más importante prestar atención a las lecciones del fracaso.`, a:`Bill Gates`},
+                {t:`No ahorres lo que queda después de gastar, gasta lo que queda después de ahorrar.`, a:`Warren Buffett`},
+                {t:`La cultura se come a la estrategia en el desayuno.`, a:`Peter Drucker`},
+                {t:`Todos nuestros sueños pueden hacerse realidad si tenemos el coraje de perseguirlos.`, a:`Walt Disney`},
+                {t:`El entrenamiento adecuado puede hacer la diferencia entre un empleado promedio y uno excelente.`, a:`Richard Branson`},
+                {t:`He fallado una y otra vez en mi vida, y por eso he tenido éxito.`, a:`Michael Jordan`},
+                {t:`No cuentes los días, haz que los días cuenten.`, a:`Coronel Sanders`},
+                {t:`Elige un trabajo que ames y no tendrás que trabajar ni un día de tu vida.`, a:`Confucio`},
+                {t:`El secreto de los negocios es saber algo que nadie más sabe.`, a:`Aristóteles Onassis`},
+                {t:`Solo los paranoicos sobreviven.`, a:`Andrew Grove`},
+                {t:`Si no abandonas, aún tienes una oportunidad.`, a:`Jack Ma`},
+                {t:`Hoy es duro, mañana será peor, pero pasado mañana será hermoso.`, a:`Jack Ma`},
+                {t:`Cuando innovas, tienes que estar preparado para que todos te digan que estás loco.`, a:`Larry Ellison`},
+                {t:`Las ideas son fáciles de conseguir; la ejecución de ellas es lo valioso.`, a:`Michael Dell`},
+                {t:`Tienes que empezar con la experiencia del cliente y trabajar hacia atrás hasta la tecnología.`, a:`Steve Jobs`},
+                {t:`Si no encuentras un camino, crea uno.`, a:`Henry Ford`},
+                {t:`Las altas expectativas son la clave de todo.`, a:`Sam Walton`},
+                {t:`El precio es lo que pagas, el valor es lo que obtienes.`, a:`Warren Buffett`},
+                {t:`El éxito es un mal maestro; seduce a la gente inteligente haciéndoles creer que no pueden perder.`, a:`Bill Gates`},
+                {t:`Si las cosas no fallan, no estás innovando lo suficiente.`, a:`Elon Musk`},
+                {t:`Es difícil escalar sin las estructuras y sistemas correctos.`, a:`Jeff Bezos`},
+                {t:`Lo que se mide, se mejora.`, a:`Peter Drucker`},
+                {t:`Un cliente pagará más si siente que le importa a la empresa.`, a:`Simon Sinek`},
+                {t:`Todo logro, grande o pequeño, comienza siempre con un solo pensamiento.`, a:`Napoleon Hill`},
+                {t:`Puedes tener todo en la vida que quieras, si ayudas a suficientes personas a obtener lo que quieren.`, a:`Zig Ziglar`},
+                {t:`Actúa con entusiasmo y te volverás entusiasta.`, a:`Dale Carnegie`},
+                {t:`Una inversión en conocimiento paga el mejor interés.`, a:`Benjamin Franklin`},
+                {t:`El primer paso hacia conseguir lo que quieres de la vida es decidir qué quieres.`, a:`J.P. Morgan`},
+                {t:`El dolor más el reflejo es igual al progreso.`, a:`Ray Dalio`},
+                {t:`El primer principio es que no debes engañarte a ti mismo, y eres la persona más fácil de engañar.`, a:`Charlie Munger`},
+                {t:`No temas al fracaso, teme no intentarlo.`, a:`Sara Blakely`},
+                {t:`No podemos triunfar como individuos sin cuidar nuestro bienestar.`, a:`Arianna Huffington`},
+                {t:`Sé fiel a ti mismo, sé genuino, sé abierto y honesto.`, a:`Indra Nooyi`},
+                {t:`No soñé mi vida, viví mis sueños y esos sueños me hicieron a mí.`, a:`Estée Lauder`},
+                {t:`Antes de construir un producto, construye personas.`, a:`Konosuke Matsushita`},
+                {t:`Nunca temas los errores; solo asegúrate de no cometer el mismo error dos veces.`, a:`Akio Morita`},
+                {t:`El éxito representa el uno por ciento del trabajo, que resulta del noventa y nueve por ciento de fracaso.`, a:`Soichiro Honda`},
+                {t:`El camino para empezar es dejar de hablar y comenzar a hacer.`, a:`Walt Disney`},
+                {t:`El genio es un uno por ciento de inspiración y un noventa y nueve por ciento de transpiración.`, a:`Thomas Edison`},
+                {t:`Fracasar es simplemente la oportunidad de empezar de nuevo, esta vez de forma más inteligente.`, a:`Henry Ford`}
+            ]
+        };
+
+        const categoriaConfig = {
+            amor:      { icon: 'fa-heart',     color: 'rose'   },
+            sabiduria: { icon: 'fa-brain',     color: 'indigo' },
+            empresa:   { icon: 'fa-briefcase', color: 'blue'   }
+        };
+
+        function seleccionarCategoria(cat) {
+            document.querySelectorAll('#leer-pills .pill').forEach(p => {
+                p.classList.toggle('active-cat', p.dataset.cat === cat);
+            });
+            renderFrases(cat);
+        }
+
+        function renderFrases(cat) {
+            const grid = document.getElementById('leer-grid');
+            const cfg = categoriaConfig[cat];
+            const lista = frasesData[cat];
+            document.getElementById('leer-contador').textContent = lista.length;
+            grid.innerHTML = lista.map(item => `
+                <div class="quote-card bg-white rounded-3xl border p-6 tech-card">
+                    <i class="fas fa-quote-right quote-mark text-${cfg.color}-600"></i>
+                    <div class="topic-icon bg-${cfg.color}-50 text-${cfg.color}-600 mb-4"><i class="fas ${cfg.icon}"></i></div>
+                    <p class="quote-text text-zinc-700 italic leading-relaxed">"${item.t}"</p>
+                    <p class="quote-author text-right font-semibold text-${cfg.color}-700 text-sm">— ${item.a}</p>
+                </div>
+            `).join('');
+        }
+
         // ---- Inicialización ----
         navigateTo('home');
+
+        // Inicializa el Rincón de Lectura (contador total + categoría por defecto)
+        (function initLeer() {
+            const total = Object.values(frasesData).reduce((acc, arr) => acc + arr.length, 0);
+            document.getElementById('leer-total').textContent = total;
+            const primerPill = document.querySelector('#leer-pills .pill[data-cat="sabiduria"]');
+            if (primerPill) primerPill.classList.add('active-cat');
+            renderFrases('sabiduria');
+        })();
     </script>
 </body>
 </html>
