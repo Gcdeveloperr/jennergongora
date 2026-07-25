@@ -116,6 +116,29 @@
         .quote-card p.quote-text { flex-grow: 1; }
         .quote-card p.quote-author { border-top: 1px solid #f0f0f2; padding-top: 0.75rem; margin-top: 0.75rem; }
 
+        /* Papelería Virtual */
+        .tool-input {
+            width: 100%; padding: 0.65rem 0.9rem; border: 1px solid #e4e4e7;
+            border-radius: 0.75rem; font-size: 0.95rem; background: #fff;
+        }
+        .tool-input:focus { outline: none; border-color: #1e40af; box-shadow: 0 0 0 3px rgba(30,64,175,0.12); }
+        .tool-label { font-size: 0.85rem; font-weight: 500; color: #52525b; margin-bottom: 0.35rem; display: block; }
+        .tool-result-box {
+            background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 1rem;
+            padding: 1.5rem; margin-top: 1.25rem;
+        }
+        .tool-btn {
+            background: #1e40af; color: #fff; font-weight: 600; padding: 0.75rem 1.5rem;
+            border-radius: 0.85rem; border: none; cursor: pointer; transition: background .2s;
+        }
+        .tool-btn:hover { background: #1e3a8a; }
+        .tool-btn.secondary { background: #fff; color: #1e40af; border: 1.5px solid #1e40af; }
+        .tool-btn.secondary:hover { background: #eff6ff; }
+        table.item-table { width: 100%; border-collapse: collapse; }
+        table.item-table th { text-align: left; font-size: 0.78rem; color: #71717a; padding: 0.4rem; border-bottom: 2px solid #e4e4e7; }
+        table.item-table td { padding: 0.4rem; border-bottom: 1px solid #f0f0f2; }
+        table.item-table input { padding: 0.4rem 0.5rem; font-size: 0.88rem; }
+
         @media (max-width: 640px) {
             .curso-content h1 { font-size: 2rem; }
             .curso-content h2 { font-size: 1.5rem; }
@@ -141,6 +164,7 @@
             <div class="flex items-center gap-6 text-sm font-medium flex-wrap">
                 <a href="#" onclick="navigateTo('home')" class="nav-link active text-zinc-600 hover:text-blue-700"><i class="fas fa-home"></i> Inicio</a>
                 <a href="#" onclick="navigateTo('leer')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-book-open"></i> Leer</a>
+                <a href="#" onclick="navigateTo('papeleria')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-file-invoice"></i> Papelería Virtual</a>
                 <a href="#" onclick="navigateTo('tecnologias')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-code"></i> Tecnologías</a>
                 <a href="#" onclick="navigateTo('psicologia')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-brain"></i> Bienestar Digital</a>
                 <a href="#" onclick="navigateTo('seguridad')" class="nav-link text-zinc-600 hover:text-blue-700"><i class="fas fa-shield-alt"></i> Ciberseguridad</a>
@@ -554,6 +578,213 @@
 
                 <h4 class="font-semibold text-lg mt-8 mb-2">Usuarios novatos frente a usuarios expertos</h4>
                 <p>Los usuarios novatos necesitan guías y ayudas contextuales; los expertos prefieren atajos y accesos rápidos. Un buen software equilibra ambos perfiles mediante <strong>progressive disclosure</strong> (mostrar funciones avanzadas solo cuando se necesitan) y respeta el <strong>principio de consistencia</strong>: cambiar la ubicación de un botón o el comportamiento de un elemento genera fricción innecesaria.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PAPELERÍA VIRTUAL -->
+    <!-- ============================================================ -->
+    <section id="papeleria" class="page-section bg-zinc-50 py-20">
+        <div class="max-w-5xl mx-auto px-6">
+
+            <div class="text-center mb-10">
+                <span class="inline-flex items-center gap-2 text-blue-700 bg-blue-50 px-4 py-1.5 rounded-full text-sm font-medium">
+                    <i class="fas fa-file-invoice"></i> Papelería Virtual
+                </span>
+                <h2 class="heading text-5xl font-bold mt-5 mb-4">Herramientas gratuitas para tu negocio</h2>
+                <p class="text-lg text-zinc-500 max-w-2xl mx-auto">
+                    Cuatro utilidades sencillas, pensadas para empresas y emprendedores en Colombia. Todo se calcula
+                    en tu navegador: no se guarda ni se envía ninguna información a ningún servidor.
+                </p>
+            </div>
+
+            <div class="pill-nav justify-center mb-14">
+                <span class="pill" onclick="scrollToId('pv-cotizador')"><i class="fas fa-file-signature"></i> Cotizador rápido</span>
+                <span class="pill" onclick="scrollToId('pv-precio')"><i class="fas fa-tags"></i> Precio de venta</span>
+                <span class="pill" onclick="scrollToId('pv-recibo')"><i class="fas fa-receipt"></i> Recibo de caja</span>
+                <span class="pill" onclick="scrollToId('pv-liquidacion')"><i class="fas fa-calculator"></i> Liquidación laboral</span>
+            </div>
+
+            <!-- 1. Cotizador rápido -->
+            <div id="pv-cotizador" class="topic-block">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="topic-icon bg-blue-50 text-blue-600"><i class="fas fa-file-signature"></i></div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Cotizador rápido</h3>
+                        <p class="text-zinc-500 text-sm">Arma una cotización con IVA en segundos y envíala o imprímela</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-5">
+                    <div>
+                        <label class="tool-label">Nombre de tu empresa</label>
+                        <input id="cot-empresa" type="text" class="tool-input" placeholder="Nombre de tu empresa">
+                    </div>
+                    <div>
+                        <label class="tool-label">Cliente</label>
+                        <input id="cot-cliente" type="text" class="tool-input" placeholder="Nombre del cliente">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="item-table mb-3" id="cot-tabla">
+                        <thead>
+                            <tr>
+                                <th style="width:45%">Descripción</th>
+                                <th style="width:15%">Cantidad</th>
+                                <th style="width:20%">Valor unitario</th>
+                                <th style="width:15%">Subtotal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cot-items"></tbody>
+                    </table>
+                </div>
+                <button class="tool-btn secondary text-sm" onclick="cotAgregarItem()"><i class="fas fa-plus mr-1"></i> Agregar ítem</button>
+
+                <div class="flex items-center gap-3 mt-5">
+                    <input id="cot-iva" type="checkbox" class="w-4 h-4" checked onchange="cotCalcular()">
+                    <label for="cot-iva" class="text-sm text-zinc-600">Incluir IVA (19%)</label>
+                </div>
+
+                <div class="tool-result-box">
+                    <div class="flex justify-between text-sm py-1"><span>Subtotal</span><span id="cot-subtotal" class="font-semibold">$ 0</span></div>
+                    <div class="flex justify-between text-sm py-1"><span>IVA (19%)</span><span id="cot-ivaval" class="font-semibold">$ 0</span></div>
+                    <div class="flex justify-between text-lg py-2 border-t mt-2 pt-2"><span class="font-bold">Total</span><span id="cot-total" class="font-bold text-blue-700">$ 0</span></div>
+                </div>
+
+                <button class="tool-btn mt-5" onclick="cotImprimir()"><i class="fas fa-print mr-2"></i>Generar / Imprimir cotización</button>
+            </div>
+
+            <!-- 2. Precio de venta -->
+            <div id="pv-precio" class="topic-block">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="topic-icon bg-emerald-50 text-emerald-600"><i class="fas fa-tags"></i></div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Calculadora de precio de venta</h3>
+                        <p class="text-zinc-500 text-sm">Define el margen que quieres ganar y calcula el precio final</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4 mb-5">
+                    <div>
+                        <label class="tool-label">Costo del producto</label>
+                        <input id="pre-costo" type="number" min="0" class="tool-input" placeholder="Ej: 50000" oninput="preCalcular()">
+                    </div>
+                    <div>
+                        <label class="tool-label">Margen de ganancia (%)</label>
+                        <input id="pre-margen" type="number" min="0" max="95" class="tool-input" placeholder="Ej: 30" oninput="preCalcular()">
+                    </div>
+                    <div>
+                        <label class="tool-label flex items-center gap-2 mt-2">
+                            <input id="pre-iva" type="checkbox" class="w-4 h-4" onchange="preCalcular()">
+                            Producto gravado con IVA (19%)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="tool-result-box grid sm:grid-cols-3 gap-4 text-center">
+                    <div>
+                        <p class="text-xs text-zinc-500 mb-1">Precio sin IVA</p>
+                        <p id="pre-sinIva" class="text-xl font-bold text-zinc-800">$ 0</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-zinc-500 mb-1">Precio final (con IVA)</p>
+                        <p id="pre-conIva" class="text-xl font-bold text-blue-700">$ 0</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-zinc-500 mb-1">Ganancia por unidad</p>
+                        <p id="pre-ganancia" class="text-xl font-bold text-emerald-600">$ 0</p>
+                    </div>
+                </div>
+                <div class="note mt-4"><i class="fas fa-lightbulb"></i> <strong>Cómo se calcula:</strong> Precio sin IVA = Costo ÷ (1 − Margen/100). Así el margen se calcula sobre el precio de venta, no sobre el costo, que es la forma más usada en el comercio.</div>
+            </div>
+
+            <!-- 3. Recibo de caja -->
+            <div id="pv-recibo" class="topic-block">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="topic-icon bg-amber-50 text-amber-600"><i class="fas fa-receipt"></i></div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Generador de recibos de caja</h3>
+                        <p class="text-zinc-500 text-sm">Deja constancia de un pago recibido en segundos</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="tool-label">Recibí de (nombre o empresa)</label>
+                        <input id="rec-de" type="text" class="tool-input" placeholder="Nombre de quien paga">
+                    </div>
+                    <div>
+                        <label class="tool-label">Valor recibido (COP)</label>
+                        <input id="rec-valor" type="number" min="0" class="tool-input" placeholder="Ej: 150000">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="tool-label">Concepto de pago</label>
+                        <input id="rec-concepto" type="text" class="tool-input" placeholder="Ej: Abono a factura N.° 0123">
+                    </div>
+                    <div>
+                        <label class="tool-label">Ciudad</label>
+                        <input id="rec-ciudad" type="text" class="tool-input" placeholder="Ej: Bucaramanga">
+                    </div>
+                    <div>
+                        <label class="tool-label">Fecha</label>
+                        <input id="rec-fecha" type="date" class="tool-input">
+                    </div>
+                    <div>
+                        <label class="tool-label">Recibido por</label>
+                        <input id="rec-recibidopor" type="text" class="tool-input" placeholder="Tu nombre o el de tu empresa">
+                    </div>
+                </div>
+
+                <button class="tool-btn mt-5" onclick="recImprimir()"><i class="fas fa-print mr-2"></i>Generar / Imprimir recibo</button>
+            </div>
+
+            <!-- 4. Liquidación laboral -->
+            <div id="pv-liquidacion" class="topic-block">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="topic-icon bg-purple-50 text-purple-600"><i class="fas fa-calculator"></i></div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Liquidador de prestaciones sociales</h3>
+                        <p class="text-zinc-500 text-sm">Cesantías, intereses, prima y vacaciones, según la normativa laboral colombiana</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="tool-label">Salario mensual (COP)</label>
+                        <input id="liq-salario" type="number" min="0" class="tool-input" placeholder="Ej: 1600000">
+                    </div>
+                    <div>
+                        <label class="tool-label flex items-center gap-2 mt-2">
+                            <input id="liq-auxtransporte" type="checkbox" class="w-4 h-4" checked>
+                            Aplica auxilio de transporte (salario ≤ 2 SMLMV)
+                        </label>
+                    </div>
+                    <div>
+                        <label class="tool-label">Fecha de inicio del contrato</label>
+                        <input id="liq-inicio" type="date" class="tool-input">
+                    </div>
+                    <div>
+                        <label class="tool-label">Fecha de finalización (o de corte)</label>
+                        <input id="liq-fin" type="date" class="tool-input">
+                    </div>
+                </div>
+
+                <button class="tool-btn" onclick="liqCalcular()"><i class="fas fa-calculator mr-2"></i>Calcular liquidación</button>
+
+                <div id="liq-resultado" class="tool-result-box hidden">
+                    <div class="flex justify-between text-sm py-1"><span>Días de servicio (base 360)</span><span id="liq-dias" class="font-semibold">0</span></div>
+                    <div class="flex justify-between text-sm py-1"><span>Cesantías</span><span id="liq-cesantias" class="font-semibold">$ 0</span></div>
+                    <div class="flex justify-between text-sm py-1"><span>Intereses a las cesantías (12% anual)</span><span id="liq-intereses" class="font-semibold">$ 0</span></div>
+                    <div class="flex justify-between text-sm py-1"><span>Prima de servicios</span><span id="liq-prima" class="font-semibold">$ 0</span></div>
+                    <div class="flex justify-between text-sm py-1"><span>Vacaciones</span><span id="liq-vacaciones" class="font-semibold">$ 0</span></div>
+                    <div class="flex justify-between text-lg py-2 border-t mt-2 pt-2"><span class="font-bold">Total a liquidar</span><span id="liq-total" class="font-bold text-blue-700">$ 0</span></div>
+                </div>
+                <button class="tool-btn mt-4" onclick="liqImprimir()"><i class="fas fa-print mr-2"></i>Imprimir liquidación</button>
+                <div class="warning-box mt-4"><i class="fas fa-exclamation-triangle"></i> <strong>Aviso:</strong> este cálculo es una guía general con las fórmulas estándar (base 360 días) y no reemplaza una asesoría laboral o contable formal, especialmente en casos con salario variable, incapacidades o suspensiones.</div>
             </div>
 
         </div>
@@ -1646,6 +1877,254 @@
             `).join('');
         }
 
+        // ============================================================
+        // PAPELERÍA VIRTUAL — Herramientas para empresas
+        // ============================================================
+        const fmtCOP = (n) => '$ ' + Math.round(n || 0).toLocaleString('es-CO');
+
+        // ---- 1. Cotizador rápido ----
+        let cotContador = 0;
+        function cotAgregarItem() {
+            cotContador++;
+            const id = 'item' + cotContador;
+            const tbody = document.getElementById('cot-items');
+            const row = document.createElement('tr');
+            row.id = id;
+            row.innerHTML = `
+                <td><input type="text" class="tool-input" placeholder="Ej: Instalación de software" oninput="cotCalcular()"></td>
+                <td><input type="number" min="0" value="1" class="tool-input cot-cantidad" oninput="cotCalcular()"></td>
+                <td><input type="number" min="0" value="0" class="tool-input cot-valor" oninput="cotCalcular()"></td>
+                <td class="cot-subtotal font-medium">$ 0</td>
+                <td><button class="text-red-500 hover:text-red-700" onclick="document.getElementById('${id}').remove(); cotCalcular();"><i class="fas fa-trash"></i></button></td>
+            `;
+            tbody.appendChild(row);
+            cotCalcular();
+        }
+
+        function cotCalcular() {
+            let subtotal = 0;
+            document.querySelectorAll('#cot-items tr').forEach(row => {
+                const cantidad = parseFloat(row.querySelector('.cot-cantidad')?.value) || 0;
+                const valor = parseFloat(row.querySelector('.cot-valor')?.value) || 0;
+                const sub = cantidad * valor;
+                const subCell = row.querySelector('.cot-subtotal');
+                if (subCell) subCell.textContent = fmtCOP(sub);
+                subtotal += sub;
+            });
+            const incluyeIva = document.getElementById('cot-iva').checked;
+            const iva = incluyeIva ? subtotal * 0.19 : 0;
+            const total = subtotal + iva;
+            document.getElementById('cot-subtotal').textContent = fmtCOP(subtotal);
+            document.getElementById('cot-ivaval').textContent = fmtCOP(iva);
+            document.getElementById('cot-total').textContent = fmtCOP(total);
+        }
+
+        // ---- Plantilla profesional estilo comprobante bancario (compartida por los 3 documentos) ----
+        function docTimestamp() {
+            const n = new Date();
+            const pad = (v) => String(v).padStart(2, '0');
+            return {
+                fecha: `${pad(n.getDate())}-${pad(n.getMonth() + 1)}-${n.getFullYear()}`,
+                hora: `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`,
+                folio: `${n.getFullYear()}${pad(n.getMonth() + 1)}${pad(n.getDate())}-${pad(n.getHours())}${pad(n.getMinutes())}${pad(n.getSeconds())}`
+            };
+        }
+
+        function docEstilosBase() {
+            return `
+                @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+                * { box-sizing: border-box; }
+                body { font-family: 'Roboto Mono', 'Courier New', monospace; color:#1a2b4c; background:#f4f6fb; padding:30px; }
+                .doc { max-width:680px; margin:0 auto; background:#fff; border:1px solid #c7d3ea; }
+                .doc-header { background:#0b2f6b; color:#fff; padding:18px 26px; display:flex; justify-content:space-between; align-items:center; }
+                .doc-header .titulo { font-size:1rem; letter-spacing:2px; font-weight:700; text-transform:uppercase; }
+                .doc-header .folio { font-size:0.72rem; text-align:right; opacity:0.85; line-height:1.5; }
+                .doc-sub { background:#e8edfb; padding:8px 26px; font-size:0.72rem; color:#334; letter-spacing:1px; border-bottom:1px dashed #b7c4e6; }
+                .doc-body { padding:24px 26px; font-size:0.82rem; }
+                .fila { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dotted #d6dcec; }
+                .fila span:first-child { color:#5a6685; }
+                .fila span:last-child { font-weight:600; text-align:right; }
+                .separador { border:none; border-top:1px dashed #b7c4e6; margin:14px 0; }
+                table.doc-tabla { width:100%; border-collapse:collapse; font-size:0.78rem; margin-top:10px; }
+                table.doc-tabla th { text-align:left; color:#5a6685; font-weight:600; padding:6px 4px; border-bottom:1px solid #0b2f6b; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; }
+                table.doc-tabla td { padding:7px 4px; border-bottom:1px dotted #d6dcec; }
+                .doc-total-box { background:#0b2f6b; color:#fff; padding:14px 26px; display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
+                .doc-total-box .lbl { font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; opacity:0.85; }
+                .doc-total-box .val { font-size:1.25rem; font-weight:700; }
+                .doc-footer { padding:18px 26px 26px; font-size:0.68rem; color:#7a86a3; text-align:center; border-top:1px dashed #b7c4e6; margin-top:10px; }
+                .firma-linea { margin:50px auto 4px; border-top:1px solid #1a2b4c; width:220px; text-align:center; padding-top:6px; font-size:0.75rem; }
+                @media print { body{ background:#fff; padding:0; } .doc{ border:none; } }
+            `;
+        }
+
+        function docEnvolver(titulo, subtitulo, bodyHtml, footerExtra) {
+            const ts = docTimestamp();
+            return `
+                <html><head><title>${titulo}</title><meta charset="UTF-8">
+                <style>${docEstilosBase()}</style>
+                </head><body>
+                <div class="doc">
+                    <div class="doc-header">
+                        <div class="titulo">${titulo}</div>
+                        <div class="folio">N.° ${ts.folio}<br>${ts.fecha} · ${ts.hora}</div>
+                    </div>
+                    <div class="doc-sub">${subtitulo}</div>
+                    <div class="doc-body">${bodyHtml}</div>
+                    <div class="doc-footer">${footerExtra || 'Documento generado electrónicamente'} · Emitido el ${ts.fecha} a las ${ts.hora}</div>
+                </div>
+                </body></html>`;
+        }
+
+        function docAbrirEImprimir(html) {
+            const w = window.open('', '_blank');
+            w.document.write(html);
+            w.document.close();
+            w.onload = () => w.print();
+            setTimeout(() => w.print(), 400);
+        }
+
+        function cotImprimir() {
+            const empresa = document.getElementById('cot-empresa').value || 'Empresa emisora';
+            const cliente = document.getElementById('cot-cliente').value || 'Cliente';
+            let filas = '';
+            document.querySelectorAll('#cot-items tr').forEach(row => {
+                const desc = row.querySelector('input[type="text"]')?.value || '';
+                const cantidad = row.querySelector('.cot-cantidad')?.value || 0;
+                const valor = row.querySelector('.cot-valor')?.value || 0;
+                const sub = (parseFloat(cantidad) || 0) * (parseFloat(valor) || 0);
+                if (desc) {
+                    filas += `<tr><td>${desc}</td><td style="text-align:center;">${cantidad}</td><td style="text-align:right;">${fmtCOP(valor)}</td><td style="text-align:right;">${fmtCOP(sub)}</td></tr>`;
+                }
+            });
+            const subtotal = document.getElementById('cot-subtotal').textContent;
+            const ivaval = document.getElementById('cot-ivaval').textContent;
+            const total = document.getElementById('cot-total').textContent;
+
+            const body = `
+                <div class="fila"><span>Empresa</span><span>${empresa}</span></div>
+                <div class="fila"><span>Cliente</span><span>${cliente}</span></div>
+                <hr class="separador">
+                <table class="doc-tabla">
+                    <thead><tr><th>Descripción</th><th>Cant.</th><th>Vlr. unit.</th><th>Subtotal</th></tr></thead>
+                    <tbody>${filas}</tbody>
+                </table>
+                <hr class="separador">
+                <div class="fila"><span>Subtotal</span><span>${subtotal}</span></div>
+                <div class="fila"><span>IVA</span><span>${ivaval}</span></div>
+                <div class="firma-linea">Firma autorizada</div>
+            `;
+            const html = docEnvolver('Cotización', 'Documento comercial sin validez fiscal', body, 'Válida por 15 días a partir de la fecha de emisión');
+            // Insertar el total destacado antes del cierre del doc-body
+            const htmlConTotal = html.replace('</div>\n                    <div class="doc-footer">',
+                `</div>\n                    <div class="doc-total-box"><span class="lbl">Total a pagar</span><span class="val">${total}</span></div>\n                    <div class="doc-footer">`);
+            docAbrirEImprimir(htmlConTotal);
+        }
+
+        // ---- 2. Calculadora de precio de venta ----
+        function preCalcular() {
+            const costo = parseFloat(document.getElementById('pre-costo').value) || 0;
+            let margen = parseFloat(document.getElementById('pre-margen').value) || 0;
+            if (margen >= 100) margen = 99;
+            const incluyeIva = document.getElementById('pre-iva').checked;
+
+            const precioSinIva = margen > 0 ? costo / (1 - margen / 100) : costo;
+            const precioConIva = incluyeIva ? precioSinIva * 1.19 : precioSinIva;
+            const ganancia = precioSinIva - costo;
+
+            document.getElementById('pre-sinIva').textContent = fmtCOP(precioSinIva);
+            document.getElementById('pre-conIva').textContent = fmtCOP(precioConIva);
+            document.getElementById('pre-ganancia').textContent = fmtCOP(ganancia);
+        }
+
+        // ---- 3. Recibo de caja ----
+        function recImprimir() {
+            const de = document.getElementById('rec-de').value || '________________';
+            const valor = parseFloat(document.getElementById('rec-valor').value) || 0;
+            const concepto = document.getElementById('rec-concepto').value || '________________';
+            const ciudad = document.getElementById('rec-ciudad').value || '________________';
+            const fechaInput = document.getElementById('rec-fecha').value;
+            const fecha = fechaInput ? new Date(fechaInput + 'T00:00:00').toLocaleDateString('es-CO') : new Date().toLocaleDateString('es-CO');
+            const recibidoPor = document.getElementById('rec-recibidopor').value || '________________';
+
+            const body = `
+                <div class="fila"><span>Ciudad</span><span>${ciudad}</span></div>
+                <div class="fila"><span>Fecha del pago</span><span>${fecha}</span></div>
+                <hr class="separador">
+                <div class="fila"><span>Recibí de</span><span>${de}</span></div>
+                <div class="fila"><span>Concepto</span><span>${concepto}</span></div>
+                <hr class="separador">
+                <div class="firma-linea">${recibidoPor}<br><span style="font-size:0.65rem;color:#7a86a3;">Recibido por</span></div>
+            `;
+            const html = docEnvolver('Recibo de Caja', 'Comprobante interno de pago', body);
+            const htmlConTotal = html.replace('</div>\n                    <div class="doc-footer">',
+                `</div>\n                    <div class="doc-total-box"><span class="lbl">Valor recibido</span><span class="val">${fmtCOP(valor)}</span></div>\n                    <div class="doc-footer">`);
+            docAbrirEImprimir(htmlConTotal);
+        }
+
+        // ---- 4. Liquidación de prestaciones sociales ----
+        function liqDiferenciaDias(inicio, fin) {
+            // Cálculo de días sobre base comercial de 360 (30 días por mes), estándar en liquidaciones en Colombia
+            let y1 = inicio.getFullYear(), m1 = inicio.getMonth() + 1, d1 = inicio.getDate();
+            let y2 = fin.getFullYear(), m2 = fin.getMonth() + 1, d2 = fin.getDate();
+            if (d1 === 31) d1 = 30;
+            if (d2 === 31 && d1 === 30) d2 = 30;
+            return (y2 - y1) * 360 + (m2 - m1) * 30 + (d2 - d1) + 1;
+        }
+
+        function liqCalcular() {
+            const salario = parseFloat(document.getElementById('liq-salario').value) || 0;
+            const aplicaAux = document.getElementById('liq-auxtransporte').checked;
+            const inicioStr = document.getElementById('liq-inicio').value;
+            const finStr = document.getElementById('liq-fin').value;
+
+            if (!salario || !inicioStr || !finStr) {
+                alert('Por favor completa el salario y las dos fechas para calcular la liquidación.');
+                return;
+            }
+
+            const auxTransporte = aplicaAux ? 200000 : 0; // valor referencial, ajústalo al vigente
+            const inicio = new Date(inicioStr + 'T00:00:00');
+            const fin = new Date(finStr + 'T00:00:00');
+            const dias = Math.max(liqDiferenciaDias(inicio, fin), 0);
+            const base = salario + auxTransporte;
+
+            const cesantias = (base * dias) / 360;
+            const intereses = (cesantias * dias * 0.12) / 360;
+            const prima = (base * dias) / 360;
+            const vacaciones = (salario * dias) / 720;
+            const total = cesantias + intereses + prima + vacaciones;
+
+            document.getElementById('liq-dias').textContent = dias;
+            document.getElementById('liq-cesantias').textContent = fmtCOP(cesantias);
+            document.getElementById('liq-intereses').textContent = fmtCOP(intereses);
+            document.getElementById('liq-prima').textContent = fmtCOP(prima);
+            document.getElementById('liq-vacaciones').textContent = fmtCOP(vacaciones);
+            document.getElementById('liq-total').textContent = fmtCOP(total);
+            document.getElementById('liq-resultado').classList.remove('hidden');
+
+            // Guarda los valores calculados para el botón de impresión
+            window._liqCalculo = { salario, dias, cesantias, intereses, prima, vacaciones, total };
+        }
+
+        function liqImprimir() {
+            const c = window._liqCalculo;
+            if (!c) { alert('Primero calcula la liquidación.'); return; }
+            const body = `
+                <div class="fila"><span>Salario base</span><span>${fmtCOP(c.salario)}</span></div>
+                <div class="fila"><span>Días de servicio (base 360)</span><span>${c.dias}</span></div>
+                <hr class="separador">
+                <div class="fila"><span>Cesantías</span><span>${fmtCOP(c.cesantias)}</span></div>
+                <div class="fila"><span>Intereses a las cesantías</span><span>${fmtCOP(c.intereses)}</span></div>
+                <div class="fila"><span>Prima de servicios</span><span>${fmtCOP(c.prima)}</span></div>
+                <div class="fila"><span>Vacaciones</span><span>${fmtCOP(c.vacaciones)}</span></div>
+                <div class="firma-linea">Firma autorizada</div>
+            `;
+            const html = docEnvolver('Liquidación de Prestaciones', 'Cálculo estimado, no reemplaza asesoría laboral', body);
+            const htmlConTotal = html.replace('</div>\n                    <div class="doc-footer">',
+                `</div>\n                    <div class="doc-total-box"><span class="lbl">Total a liquidar</span><span class="val">${fmtCOP(c.total)}</span></div>\n                    <div class="doc-footer">`);
+            docAbrirEImprimir(htmlConTotal);
+        }
+
         // ---- Inicialización ----
         navigateTo('home');
 
@@ -1656,6 +2135,11 @@
             const primerPill = document.querySelector('#leer-pills .pill[data-cat="sabiduria"]');
             if (primerPill) primerPill.classList.add('active-cat');
             renderFrases('sabiduria');
+        })();
+
+        // Inicializa el Cotizador con un primer ítem
+        (function initPapeleria() {
+            cotAgregarItem();
         })();
     </script>
 </body>
