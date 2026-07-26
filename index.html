@@ -188,6 +188,59 @@
             background: #fff;
         }
         .legal-modal-footer .tool-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.55rem; }
+
+        /* ---- Botón flotante de Consulta y Ayuda (pago) ---- */
+        .consulta-flotante {
+            position: fixed;
+            top: 50%;
+            right: 1.5rem;
+            transform: translateY(-50%);
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+        }
+        .consulta-pulse-wrap {
+            position: relative;
+            width: 4rem; height: 4rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .consulta-pulse-ring {
+            position: absolute; inset: 0;
+            border-radius: 50%;
+            background: rgba(249, 115, 22, 0.55);
+            animation: consultaPulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .consulta-pulse-ring.delay {
+            animation-delay: 0.6s;
+        }
+        @keyframes consultaPulse {
+            0%   { transform: scale(0.85); opacity: 0.85; }
+            100% { transform: scale(1.9); opacity: 0; }
+        }
+        .consulta-btn-circle {
+            position: relative; z-index: 2;
+            width: 4rem; height: 4rem; border-radius: 50%;
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; box-shadow: 0 10px 25px -5px rgba(249,115,22,0.6), 0 8px 10px -6px rgba(249,115,22,0.4);
+            border: 3px solid #fff;
+            transition: transform .25s ease;
+        }
+        .consulta-flotante:hover .consulta-btn-circle { transform: scale(1.08); }
+        .consulta-tag {
+            font-size: 0.68rem; font-weight: 700; color: #fff; letter-spacing: 0.3px;
+            background: #9a3412; padding: 0.2rem 0.6rem; border-radius: 999px;
+            white-space: nowrap; box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 640px) {
+            .consulta-flotante { right: 0.9rem; }
+            .consulta-pulse-wrap, .consulta-btn-circle { width: 3.4rem; height: 3.4rem; }
+            .consulta-btn-circle { font-size: 1.3rem; }
+            .consulta-tag { font-size: 0.6rem; }
+        }
     </style>
 </head>
 <body class="bg-zinc-50 text-zinc-800">
@@ -1135,6 +1188,50 @@
     </div>
 
     <!-- ============================================================ -->
+    <!-- BOTÓN FLOTANTE: CONSULTA Y AYUDA (pago) -->
+    <!-- ============================================================ -->
+    <div id="consulta-flotante-btn" class="consulta-flotante" onclick="toggleConsultaModal()" role="button" aria-label="Consulta y ayuda en línea">
+        <div class="consulta-pulse-wrap">
+            <span class="consulta-pulse-ring"></span>
+            <span class="consulta-pulse-ring delay"></span>
+            <div class="consulta-btn-circle">
+                <i class="fas fa-comment-dollar"></i>
+            </div>
+        </div>
+        <span class="consulta-tag">Consulta y Ayuda</span>
+    </div>
+
+    <div id="consulta-overlay" class="legal-overlay" role="dialog" aria-modal="true" aria-labelledby="consulta-titulo">
+        <div class="legal-modal" style="max-width: 480px;">
+            <div class="legal-modal-header" style="background: linear-gradient(135deg, #c2410c, #f97316);">
+                <i class="fas fa-comment-dollar legal-shield" style="color:#fff;"></i>
+                <h3 id="consulta-titulo" class="heading text-2xl font-bold">Consulta y Ayuda en Línea</h3>
+                <p class="text-orange-50 text-sm mt-1">Resolvamos juntos tu inquietud</p>
+            </div>
+
+            <div class="legal-modal-body">
+                <p class="mb-5 text-center">Para poder recibir mi apoyo, cancela el valor de la consulta y procederé a ayudarte con tu asunto.</p>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-center mb-5">
+                    <p class="text-xs text-zinc-500 mb-1 uppercase tracking-wide">Valor de la consulta</p>
+                    <p class="text-4xl font-bold text-orange-600">$ 50.000</p>
+                    <p class="text-xs text-zinc-400 mt-1">COP</p>
+                </div>
+
+                <p class="text-sm text-zinc-500 text-center">La consulta o ayuda se factura por el tiempo invertido en el análisis y la asesoría necesarios para resolver tu asunto.</p>
+            </div>
+
+            <div class="legal-modal-footer">
+                <a href="https://mpago.li/163nGUQ" target="_blank" rel="noopener noreferrer"
+                   class="tool-btn" style="background:#ea580c; text-decoration:none;">
+                    <i class="fas fa-lock"></i> Pagar consulta y continuar
+                </a>
+                <button onclick="toggleConsultaModal()" class="tool-btn secondary mt-3" style="border-color:#ea580c; color:#ea580c;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
     <!-- JAVASCRIPT -->
     <!-- ============================================================ -->
     <script>
@@ -1146,12 +1243,15 @@
                 link.classList.toggle('active', link.getAttribute('onclick') === `navigateTo('${page}')`);
             });
             window.scrollTo({ top: 0, behavior: 'instant' });
+
+            // El aviso legal de confidencialidad se muestra cada vez que se entra a Inicio
+            if (page === 'home') {
+                mostrarAvisoLegalSiCorresponde();
+            }
         }
 
         // ---- Aviso legal de confidencialidad ----
         function mostrarAvisoLegalSiCorresponde() {
-            const yaVisto = localStorage.getItem('avisoLegalVisto');
-            if (yaVisto) return;
             const overlay = document.getElementById('legal-overlay');
             overlay.classList.add('show');
             document.body.style.overflow = 'hidden';
@@ -1161,7 +1261,14 @@
             const overlay = document.getElementById('legal-overlay');
             overlay.classList.remove('show');
             document.body.style.overflow = '';
-            localStorage.setItem('avisoLegalVisto', '1');
+        }
+
+        // ---- Consulta y Ayuda en línea (pago) ----
+        function toggleConsultaModal() {
+            const overlay = document.getElementById('consulta-overlay');
+            const abrir = !overlay.classList.contains('show');
+            overlay.classList.toggle('show');
+            document.body.style.overflow = abrir ? 'hidden' : '';
         }
 
         function scrollToId(id) {
@@ -2248,7 +2355,6 @@
 
         // ---- Inicialización ----
         navigateTo('home');
-        mostrarAvisoLegalSiCorresponde();
 
         // Inicializa el Rincón de Lectura (contador total + categoría por defecto)
         (function initLeer() {
