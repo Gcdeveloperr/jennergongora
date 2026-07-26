@@ -204,7 +204,7 @@
             </div>
 
             <div class="legal-modal-body">
-                <p class="mb-6">Darte apoyo es un compromiso serio. Esto no depende solo de mi palabra: está respaldado por la ley colombiana.</p>
+                <p class="mb-6">Como profesional que también apoya labores administrativas y de gestión de información para empresas y personas, el manejo confidencial de todo lo que se me confía es un compromiso serio. Esto no depende solo de mi palabra: está respaldado por la ley colombiana.</p>
 
                 <div class="legal-point">
                     <div class="legal-icon bg-blue-50 text-blue-600"><i class="fas fa-database"></i></div>
@@ -1138,16 +1138,15 @@
     <!-- JAVASCRIPT -->
     <!-- ============================================================ -->
     <script>
-         function navigateTo(page) {
-        function mostrarAvisoLegalSiCorresponde() {
-            const yaVisto = localStorage.getItem('avisoLegalVisto');
-            localStorage.setItem('avisoLegalVisto', '1');
-                    <pre><code>// Almacenar token (ejemplo con localStorage)
-        localStorage.setItem('token', token);
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-        mostrarAvisoLegalSiCorresponde();
-
-        
+        function navigateTo(page) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+            // Resalta en el menú el enlace correspondiente a la página activa
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link.getAttribute('onclick') === `navigateTo('${page}')`);
+            });
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
 
         // ---- Aviso legal de confidencialidad ----
         function mostrarAvisoLegalSiCorresponde() {
