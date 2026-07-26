@@ -144,9 +144,111 @@
             .curso-content h2 { font-size: 1.5rem; }
             .slider-btn { width: 32px; height: 32px; font-size: 1rem; }
         }
+
+        /* ---- Aviso legal de confidencialidad (banner modal de bienvenida) ---- */
+        .legal-overlay {
+            position: fixed; inset: 0; z-index: 300;
+            background: rgba(10, 16, 32, 0.72);
+            backdrop-filter: blur(5px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.25rem;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity .35s ease, visibility .35s ease;
+        }
+        .legal-overlay.show { opacity: 1; visibility: visible; pointer-events: auto; }
+        .legal-modal {
+            background: #fff; width: 100%; max-width: 640px; max-height: 87vh;
+            border-radius: 1.75rem; overflow: hidden;
+            display: flex; flex-direction: column;
+            box-shadow: 0 30px 70px -15px rgba(0,0,0,0.4);
+            transform: translateY(28px) scale(0.96);
+            transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .legal-overlay.show .legal-modal { transform: translateY(0) scale(1); }
+        .legal-modal-header {
+            background: linear-gradient(135deg, #0b2f6b, #1e40af);
+            color: #fff; text-align: center; padding: 2rem 2rem 1.5rem; flex-shrink: 0;
+        }
+        .legal-modal-header i.legal-shield { font-size: 2.1rem; color: #fbbf24; margin-bottom: 0.6rem; }
+        .legal-modal-body {
+            padding: 1.75rem 2rem; overflow-y: auto; color: #3f3f46; font-size: 0.92rem; line-height: 1.7;
+        }
+        .legal-modal-body::-webkit-scrollbar { width: 7px; }
+        .legal-modal-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+        .legal-modal-body::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .legal-modal-body::-webkit-scrollbar-track { background: transparent; }
+        .legal-point { display: flex; gap: 0.9rem; margin-bottom: 1.5rem; }
+        .legal-point:last-of-type { margin-bottom: 1.25rem; }
+        .legal-point .legal-icon {
+            width: 2.6rem; height: 2.6rem; border-radius: 0.9rem; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+        }
+        .legal-modal-footer {
+            padding: 1.15rem 2rem 1.6rem; border-top: 1px solid #f0f0f2; flex-shrink: 0;
+            background: #fff;
+        }
+        .legal-modal-footer .tool-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.55rem; }
     </style>
 </head>
 <body class="bg-zinc-50 text-zinc-800">
+
+    <!-- ============================================================ -->
+    <!-- AVISO LEGAL DE CONFIDENCIALIDAD (banner de bienvenida) -->
+    <!-- ============================================================ -->
+    <div id="legal-overlay" class="legal-overlay" role="dialog" aria-modal="true" aria-labelledby="legal-titulo">
+        <div class="legal-modal">
+            <div class="legal-modal-header">
+                <i class="fas fa-shield-halved legal-shield"></i>
+                <h3 id="legal-titulo" class="heading text-2xl font-bold">Aviso sobre confidencialidad y protección de datos</h3>
+                <p class="text-blue-100 text-sm mt-1">Antes de continuar, un par de cosas importantes</p>
+            </div>
+
+            <div class="legal-modal-body">
+                <p class="mb-6">Como profesional que también apoya labores administrativas y de gestión de información para empresas y personas, el manejo confidencial de todo lo que se me confía es un compromiso serio. Esto no depende solo de mi palabra: está respaldado por la ley colombiana.</p>
+
+                <div class="legal-point">
+                    <div class="legal-icon bg-blue-50 text-blue-600"><i class="fas fa-database"></i></div>
+                    <div>
+                        <p class="font-semibold text-zinc-800 mb-1">Ley 1581 de 2012 · Habeas Data</p>
+                        <p>Regula el tratamiento de datos personales en Colombia. Su artículo 23 faculta a la Superintendencia de Industria y Comercio (SIC) para imponer multas de hasta <strong>2.000 salarios mínimos mensuales legales vigentes</strong>, además de ordenar la suspensión o el cierre temporal o definitivo de quien haga un uso indebido de información personal.</p>
+                    </div>
+                </div>
+
+                <div class="legal-point">
+                    <div class="legal-icon bg-red-50 text-red-500"><i class="fas fa-gavel"></i></div>
+                    <div>
+                        <p class="font-semibold text-zinc-800 mb-1">Ley 1273 de 2009 · Delitos informáticos</p>
+                        <p>Modificó el Código Penal para proteger la información y los datos como un bien jurídico propio. Delitos como el acceso abusivo a un sistema o la violación de datos personales tienen penas de <strong>prisión de 48 a 96 meses (4 a 8 años)</strong> y multas de 100 a 1.000 salarios mínimos legales mensuales vigentes.</p>
+                    </div>
+                </div>
+
+                <div class="legal-point">
+                    <div class="legal-icon bg-amber-50 text-amber-600"><i class="fas fa-triangle-exclamation"></i></div>
+                    <div>
+                        <p class="font-semibold text-zinc-800 mb-1">La pena aumenta cuando hay confianza de por medio</p>
+                        <p>El artículo 269H de esa misma ley establece que las penas se incrementan de una tercera parte a la mitad —y hasta de la mitad a las tres cuartas partes en agravantes específicos— cuando el responsable se aprovecha de la confianza depositada por quien le confió la información, o revela su contenido en perjuicio de otra persona.</p>
+                    </div>
+                </div>
+
+                <div class="legal-point">
+                    <div class="legal-icon bg-emerald-50 text-emerald-600"><i class="fas fa-lock"></i></div>
+                    <div>
+                        <p class="font-semibold text-zinc-800 mb-1">Mi compromiso contigo</p>
+                        <p>Cualquier información de negocio, personal o administrativa que compartas conmigo se maneja bajo estricta confidencialidad y únicamente para el propósito acordado. Nunca se comparte con terceros sin tu autorización expresa.</p>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-50 border border-zinc-200 rounded-2xl p-4 flex gap-3 items-start">
+                    <i class="fas fa-circle-info text-zinc-400 mt-0.5"></i>
+                    <p class="text-xs text-zinc-500">Esta información tiene fines informativos y no constituye asesoría jurídica. Si tienes dudas puntuales sobre protección de datos, lo mejor es consultar con un abogado especializado.</p>
+                </div>
+            </div>
+
+            <div class="legal-modal-footer">
+                <button onclick="cerrarAvisoLegal()" class="tool-btn"><i class="fas fa-check"></i> He leído y entendido</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="bg-white border-b sticky top-0 z-50">
@@ -595,7 +697,7 @@
                 </span>
                 <h2 class="heading text-5xl font-bold mt-5 mb-4">Herramientas gratuitas para tu negocio</h2>
                 <p class="text-lg text-zinc-500 max-w-2xl mx-auto">
-                    Cuatro utilidades sencillas, pensadas para empresas. Todo se calcula
+                    Cuatro utilidades sencillas, pensadas para empresas y emprendedores en Colombia. Todo se calcula
                     en tu navegador: no se guarda ni se envía ninguna información a ningún servidor.
                 </p>
             </div>
@@ -1039,8 +1141,27 @@
         function navigateTo(page) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(page).classList.add('active');
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            // Resalta en el menú el enlace correspondiente a la página activa
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link.getAttribute('onclick') === `navigateTo('${page}')`);
+            });
             window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        // ---- Aviso legal de confidencialidad ----
+        function mostrarAvisoLegalSiCorresponde() {
+            const yaVisto = localStorage.getItem('avisoLegalVisto');
+            if (yaVisto) return;
+            const overlay = document.getElementById('legal-overlay');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarAvisoLegal() {
+            const overlay = document.getElementById('legal-overlay');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+            localStorage.setItem('avisoLegalVisto', '1');
         }
 
         function scrollToId(id) {
@@ -2127,6 +2248,7 @@
 
         // ---- Inicialización ----
         navigateTo('home');
+        mostrarAvisoLegalSiCorresponde();
 
         // Inicializa el Rincón de Lectura (contador total + categoría por defecto)
         (function initLeer() {
