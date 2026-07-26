@@ -1138,15 +1138,16 @@
     <!-- JAVASCRIPT -->
     <!-- ============================================================ -->
     <script>
-        function navigateTo(page) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(page).classList.add('active');
-            // Resalta en el menú el enlace correspondiente a la página activa
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.toggle('active', link.getAttribute('onclick') === `navigateTo('${page}')`);
-            });
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        }
+         function navigateTo(page) {
+        function mostrarAvisoLegalSiCorresponde() {
+            const yaVisto = localStorage.getItem('avisoLegalVisto');
+            localStorage.setItem('avisoLegalVisto', '1');
+                    <pre><code>// Almacenar token (ejemplo con localStorage)
+        localStorage.setItem('token', token);
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+        mostrarAvisoLegalSiCorresponde();
+
+        
 
         // ---- Aviso legal de confidencialidad ----
         function mostrarAvisoLegalSiCorresponde() {
